@@ -8,6 +8,7 @@ services:
             - POSTGRES_DB=ttn-locator
         restart: always
         ports:
+            # PostgreSQL Port
             - "5432:5432"
         volumes:
             - postgres-data:/var/lib/postgresql/data
@@ -21,9 +22,20 @@ services:
             PGADMIN_DEFAULT_EMAIL: admin@admin.com
             PGADMIN_DEFAULT_PASSWORD: root
         ports:
+            # Web Interface
             - "80"
         volumes:
             - pgadmin-data:/var/lib/pgadmin
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        ports:
+            # AMQP
+            - 5672:5672
+            # Management Web Interface
+            - 15672
+        volumes:
+            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
 volumes:
     postgres-data:
     pgadmin-data:
