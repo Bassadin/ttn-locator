@@ -1,21 +1,21 @@
 # Base image
-FROM node:18
+FROM node:lts-alpine
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package.json ./
+RUN apk update && apk add --no-cache libc6-compat=1.2.3-r4
+RUN corepack enable && corepack prepare pnpm@7.4.1 --activate
+
+# pnpm fetch does require only lockfile
 COPY pnpm-lock.yaml ./
+RUN pnpm fetch
 
-# Install app dependencies
-RUN pnpm install
+COPY . ./
+RUN pnpm install --offline
+RUN pnpm build
 
-# Bundle app source
-COPY . .
-
-# Creates a "dist" folder with the production build
-RUN pnpm run build
+EXPOSE 3000
 
 # Start the server using the production build
 CMD [ "node", "dist/main.js" ]
