@@ -4,7 +4,11 @@ services:
         build: ./ttnmapper-reader
         restart: always
         ports:
+            # Backend API
             - "3000:3000"
+        depends_on:
+            - db
+            - rabbitmq
     db:
         image: postgres
         environment:
