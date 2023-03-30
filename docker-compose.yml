@@ -2,7 +2,7 @@
 version: "3"
 services:
     # ttnmapper-reader:
-    #     build: ./ttnmapper-reader
+    #     build: .
     #     restart: always
     #     ports:
     #         # Backend API
@@ -36,16 +36,6 @@ services:
             - "80"
         volumes:
             - pgadmin-data:/var/lib/pgadmin
-    # rabbitmq:
-    #     image: rabbitmq:3-management-alpine
-    #     ports:
-    #         # AMQP
-    #         - 5672:5672
-    #         # Management Web Interface
-    #         - 15672
-    #     volumes:
-    #         - rabbitmq-data:/var/lib/rabbitmq/
 volumes:
     postgres-data:
     pgadmin-data:
-    rabbitmq-data:
