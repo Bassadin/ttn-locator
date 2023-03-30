@@ -1,7 +1,9 @@
+import { TTNMapperMeasurement } from './entities/ttnmapper-measurements/ttnmapper-measurement.entity';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
 @Module({
     imports: [
@@ -13,11 +15,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             username: 'postgres',
             password: 'postgres',
             database: 'ttn-locator',
-            entities: [],
+            entities: [TTNMapperMeasurement],
             synchronize: true,
         }),
     ],
     controllers: [AppController],
     providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+    constructor(private dataSource: DataSource) {}
+}
