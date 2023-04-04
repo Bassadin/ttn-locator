@@ -1,20 +1,20 @@
-import { TTNMapperMeasurement } from './ttnmapper-measurement.entity';
+import { TTNMapperDatapoint } from './ttnmapperDatapoints.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class TTNMApperMeasurementsService {
+export class TTNMapperDatapointsService {
     constructor(
-        @InjectRepository(TTNMapperMeasurement)
-        private ttnmapperMeasurementsRepository: Repository<TTNMapperMeasurement>,
+        @InjectRepository(TTNMapperDatapoint)
+        private ttnmapperMeasurementsRepository: Repository<TTNMapperDatapoint>,
     ) {}
 
-    findAll(): Promise<TTNMapperMeasurement[]> {
+    findAll(): Promise<TTNMapperDatapoint[]> {
         return this.ttnmapperMeasurementsRepository.find();
     }
 
-    findOne(id: number): Promise<TTNMapperMeasurement | null> {
+    findOne(id: number): Promise<TTNMapperDatapoint | null> {
         return this.ttnmapperMeasurementsRepository.findOneBy({ id });
     }
 

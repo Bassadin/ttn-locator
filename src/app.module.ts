@@ -1,4 +1,4 @@
-import { TTNMapperMeasurement } from './entities/ttnmapper-measurements/ttnmapper-measurement.entity';
+import { TTNMapperDatapoint } from './entities/ttnmapperDatapoints/ttnmapperDatapoints.entity';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,7 +17,7 @@ import { ConfigModule } from '@nestjs/config';
             username: process.env.DATABASE_USER,
             password: process.env.DATABASE_PASSWORD,
             database: process.env.DATABASE_NAME,
-            entities: [TTNMapperMeasurement],
+            entities: [TTNMapperDatapoint],
             synchronize: true,
         }),
     ],
