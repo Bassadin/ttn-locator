@@ -32,9 +32,9 @@ jobs:
             DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ttnmapper-reader
         steps:
             - uses: actions/checkout@v3
-            - uses: actions/setup-node@v1
+            - uses: actions/setup-node@v3
               with:
-                  node-version: '14.x'
+                  node-version: 16
             - uses: pnpm/action-setup@v2
               with:
                   version: 7
@@ -52,9 +52,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - uses: actions/setup-node@v1
+            - uses: actions/setup-node@v3
               with:
-                  node-version: '14.x'
+                  node-version: 16
             - uses: pnpm/action-setup@v2
               with:
                   version: 7
@@ -69,9 +69,9 @@ jobs:
         needs: [prisma-migrate, eslint]
         steps:
             - uses: actions/checkout@v3
-            - uses: actions/setup-node@v1
+            - uses: actions/setup-node@v3
               with:
-                  node-version: '14.x'
+                  node-version: 16
             - uses: pnpm/action-setup@v2
               with:
                   version: 7
