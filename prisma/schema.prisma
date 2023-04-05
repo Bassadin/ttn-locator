@@ -32,8 +32,6 @@ model device_gps_datapoint {
 
 model device {
     device_id             String                 @id
-    name                  String                 @db.VarChar(99)
-    description           String                 @db.VarChar(99)
     device_gps_datapoints device_gps_datapoint[]
 }
 

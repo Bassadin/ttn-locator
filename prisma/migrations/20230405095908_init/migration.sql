@@ -26,8 +26,6 @@ CREATE TABLE "device_gps_datapoint" (
 -- CreateTable
 CREATE TABLE "device" (
     "device_id" TEXT NOT NULL,
-    "name" VARCHAR(99) NOT NULL,
-    "description" VARCHAR(99) NOT NULL,
 
     CONSTRAINT "device_pkey" PRIMARY KEY ("device_id")
 );
