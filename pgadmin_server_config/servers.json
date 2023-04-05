@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "Local postgres",
+            "Group": "Servers",
+            "Host": "db",
+            "Port": 5432,
+            "MaintenanceDB": "ttnmapper-reader",
+            "Username": "postgres",
+            "PassFile": "/pgpass"
+        }
+    }
+}

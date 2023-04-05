@@ -33,9 +33,11 @@ services:
             PGADMIN_DEFAULT_PASSWORD: root
         ports:
             # Web Interface
-            - "80"
+            - "57000:80"
         volumes:
             - pgadmin-data:/var/lib/pgadmin
+            - ./pgadmin_server_config/servers.json:/pgadmin4/servers.json
+            - ./pgadmin_server_config/pgpass:/pgpass:rw
 volumes:
     postgres-data:
     pgadmin-data:
