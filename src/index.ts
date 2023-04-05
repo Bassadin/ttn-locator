@@ -1,27 +1,20 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
-import express, { Request, Response } from 'express';
+import Fastify from 'fastify';
+import fastifyPrismaClient from 'fastify-prisma-client';
+import routes from './routes';
 
-// Express instance
-const app = express();
+// Fastify instance
+const fastify = Fastify({ logger: true });
 
-app.use(express.json());
+fastify.register(fastifyPrismaClient);
+fastify.register(routes);
 
-// 🏚️ Default Route
-// This is the Default Route of the API
-app.get('/', async (req: Request, res: Response) => {
-    res.json({ message: 'Hello from ttnmapper-reader!' });
-});
+const PORT: number = parseInt(process.env.PORT || '3000');
 
-// Create new user
-// This is the Route for creating a new user via POST Method
-app.get('/ttnmapper_datapoints', async (req: Request, res: Response) => {
-    const ttnmapper_datapoints = await prisma.ttnmapper_datapoint.findMany();
-    res.json({ message: 'success', data: ttnmapper_datapoints });
-});
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    console.log(`Express server is running on port ${PORT}`);
+// Run the server!
+fastify.listen({ port: PORT }, function (err, address) {
+    if (err) {
+        fastify.log.error(err);
+        process.exit(1);
+    }
+    console.debug(`Server is now listening on ${address}`);
 });
