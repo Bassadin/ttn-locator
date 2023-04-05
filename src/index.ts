@@ -5,7 +5,10 @@ import routes from './routes';
 // Fastify instance
 const fastify = Fastify({ logger: true });
 
+// Register Prisma Client
 fastify.register(fastifyPrismaClient);
+
+// Register Routes
 fastify.register(routes);
 
 const PORT: number = parseInt(process.env.PORT || '3000');
