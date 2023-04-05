@@ -7,14 +7,37 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model user {
-    id     Int         @id @default(autoincrement())
-    name   String      @db.VarChar(99)
-    email  String      @db.VarChar(99)
-    status user_status
+model ttnmapper_datapoint {
+    id                      Int                  @id
+    device_gps_datapoint    device_gps_datapoint @relation(fields: [device_gps_datapoint_id], references: [id])
+    device_gps_datapoint_id Int
+    gateway                 gateway              @relation(fields: [gateway_GatewayEUI], references: [GatewayEUI])
+    gateway_GatewayEUI      String
+    name                    String               @db.VarChar(99)
+    email                   String               @db.VarChar(99)
 }
 
-enum user_status {
-    active
-    inactive
+model device_gps_datapoint {
+    id                  Int                   @id
+    device              device                @relation(fields: [device_dev_id], references: [device_id])
+    device_dev_id       String
+    latitude            Float
+    longitude           Float
+    altitude            Float
+    hdop                Float
+    ttnmapper_datapoint ttnmapper_datapoint[]
+}
+
+model device {
+    device_id            String                 @id @map("dev_id")
+    name                 String                 @db.VarChar(99)
+    description          String                 @db.VarChar(99)
+    device_gps_datapoint device_gps_datapoint[]
+}
+
+model gateway {
+    GatewayEUI          String                @id
+    latitude            Float
+    longitude           Float
+    ttnmapper_datapoint ttnmapper_datapoint[]
 }
