@@ -3,7 +3,7 @@ CREATE TABLE "ttnmapper_datapoint" (
     "id" INTEGER NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL,
     "device_gps_datapoint_id" INTEGER NOT NULL,
-    "gateway_GatewayEUI" TEXT NOT NULL,
+    "gateway_id" TEXT NOT NULL,
     "rssi" INTEGER NOT NULL,
     "snr" DOUBLE PRECISION NOT NULL,
 
@@ -13,6 +13,7 @@ CREATE TABLE "ttnmapper_datapoint" (
 -- CreateTable
 CREATE TABLE "device_gps_datapoint" (
     "id" INTEGER NOT NULL,
+    "timestamp" TIMESTAMP(3) NOT NULL,
     "device_dev_id" TEXT NOT NULL,
     "latitude" DOUBLE PRECISION NOT NULL,
     "longitude" DOUBLE PRECISION NOT NULL,
@@ -33,18 +34,18 @@ CREATE TABLE "device" (
 
 -- CreateTable
 CREATE TABLE "gateway" (
-    "GatewayEUI" TEXT NOT NULL,
+    "gateway_id" TEXT NOT NULL,
     "latitude" DOUBLE PRECISION NOT NULL,
     "longitude" DOUBLE PRECISION NOT NULL,
 
-    CONSTRAINT "gateway_pkey" PRIMARY KEY ("GatewayEUI")
+    CONSTRAINT "gateway_pkey" PRIMARY KEY ("gateway_id")
 );
 
 -- AddForeignKey
 ALTER TABLE "ttnmapper_datapoint" ADD CONSTRAINT "ttnmapper_datapoint_device_gps_datapoint_id_fkey" FOREIGN KEY ("device_gps_datapoint_id") REFERENCES "device_gps_datapoint"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ttnmapper_datapoint" ADD CONSTRAINT "ttnmapper_datapoint_gateway_GatewayEUI_fkey" FOREIGN KEY ("gateway_GatewayEUI") REFERENCES "gateway"("GatewayEUI") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ttnmapper_datapoint" ADD CONSTRAINT "ttnmapper_datapoint_gateway_id_fkey" FOREIGN KEY ("gateway_id") REFERENCES "gateway"("gateway_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "device_gps_datapoint" ADD CONSTRAINT "device_gps_datapoint_device_dev_id_fkey" FOREIGN KEY ("device_dev_id") REFERENCES "device"("device_id") ON DELETE RESTRICT ON UPDATE CASCADE;

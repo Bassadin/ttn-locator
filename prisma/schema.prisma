@@ -12,14 +12,15 @@ model ttnmapper_datapoint {
     timestamp               DateTime
     device_gps_datapoint    device_gps_datapoint @relation(fields: [device_gps_datapoint_id], references: [id])
     device_gps_datapoint_id Int
-    gateway                 gateway              @relation(fields: [gateway_GatewayEUI], references: [GatewayEUI])
-    gateway_GatewayEUI      String
+    gateway                 gateway              @relation(fields: [gateway_id], references: [gateway_id])
+    gateway_id              String
     rssi                    Int
     snr                     Float
 }
 
 model device_gps_datapoint {
     id                  Int                   @id
+    timestamp           DateTime
     device              device                @relation(fields: [device_dev_id], references: [device_id])
     device_dev_id       String
     latitude            Float
@@ -30,15 +31,15 @@ model device_gps_datapoint {
 }
 
 model device {
-    device_id            String                 @id
-    name                 String                 @db.VarChar(99)
-    description          String                 @db.VarChar(99)
-    device_gps_datapoint device_gps_datapoint[]
+    device_id             String                 @id
+    name                  String                 @db.VarChar(99)
+    description           String                 @db.VarChar(99)
+    device_gps_datapoints device_gps_datapoint[]
 }
 
 model gateway {
-    GatewayEUI          String                @id
-    latitude            Float
-    longitude           Float
-    ttnmapper_datapoint ttnmapper_datapoint[]
+    gateway_id           String                @id
+    latitude             Float
+    longitude            Float
+    ttnmapper_datapoints ttnmapper_datapoint[]
 }
