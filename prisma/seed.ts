@@ -10,7 +10,7 @@ async function main() {
         },
     });
     const example_gateway = await prisma.gateway.upsert({
-        where: { gateway_id: 'loris-tracker-hfu' },
+        where: { gateway_id: 'mikrotik-lr8-001' },
         update: {},
         create: {
             gateway_id: 'mikrotik-lr8-001',
