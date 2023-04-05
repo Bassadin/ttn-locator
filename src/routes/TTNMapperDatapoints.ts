@@ -1,12 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
-export default async function routes(fastify: FastifyInstance, _options: any) {
-    // 🏚️ Default Route
-    // This is the Default Route of the API
-    fastify.get('/', async (request, reply) => {
-        reply.send({ message: 'Hello from ttnmapper-reader!' });
-    });
-
+export default async function TTNMapperDatapointsRoutes(fastify: FastifyInstance, _options: any) {
     // Create new user
     // This is the Route for creating a new user via POST Method
     fastify.get('/ttnmapper_datapoints', async (request, reply) => {

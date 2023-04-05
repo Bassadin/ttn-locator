@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import fastifyPrismaClient from 'fastify-prisma-client';
-import routes from './routes';
+import BaseRoutes from './routes/BaseRoutes';
+import TTNMapperDatapointsRoutes from './routes/TTNMapperDatapoints';
 
 // Fastify instance
 const fastify = Fastify({ logger: true });
@@ -9,7 +10,8 @@ const fastify = Fastify({ logger: true });
 fastify.register(fastifyPrismaClient);
 
 // Register Routes
-fastify.register(routes);
+fastify.register(BaseRoutes);
+fastify.register(TTNMapperDatapointsRoutes);
 
 const PORT: number = parseInt(process.env.PORT || '3000');
 
