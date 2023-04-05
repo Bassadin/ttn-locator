@@ -6,6 +6,8 @@
         "moduleResolution": "node",
         "baseUrl": "./",
         "esModuleInterop": true,
-        "strict": true
-    }
+        "strict": true,
+        "outDir": "./dist"
+    },
+    "exclude": ["prisma", "node_modules", "dist"]
 }
