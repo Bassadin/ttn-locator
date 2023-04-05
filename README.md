@@ -10,7 +10,7 @@ A simple "microservice" that reads data from TTNMapper and stores it in a Postgr
 - Express
 - TypeScript
 - Prisma
-- MySQL
+- Postgres
 
 ## 🧬 Development
 
@@ -32,10 +32,10 @@ cd nepb
 pnpm install
 ```
 
-- Create a Database in MySQL (or) You can use GUI to create a database
+- Create a Database in PostgreSQL (or) You can use GUI to create a database
 
 ```
-mysql> CREATE DATABASE express;
+PostgreSQL> CREATE DATABASE express;
 ```
 
 - Copy the `.env.sample` file as `.env`
@@ -44,10 +44,10 @@ mysql> CREATE DATABASE express;
 cp .env.sample .env
 ```
 
-- Edit the MySQL Details in the `.env` file
+- Edit the PostgreSQL Details in the `.env` file
 
 ```
-DATABASE_URL="mysql://USERNAME:PASSWORD@localhost:3306/DBNAME?schema=public"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ttnmapper-reader"
 ```
 
 - Push the Prisma Schema into Database
