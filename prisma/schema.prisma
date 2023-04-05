@@ -9,12 +9,13 @@ datasource db {
 
 model ttnmapper_datapoint {
     id                      Int                  @id
+    timestamp               DateTime
     device_gps_datapoint    device_gps_datapoint @relation(fields: [device_gps_datapoint_id], references: [id])
     device_gps_datapoint_id Int
     gateway                 gateway              @relation(fields: [gateway_GatewayEUI], references: [GatewayEUI])
     gateway_GatewayEUI      String
-    name                    String               @db.VarChar(99)
-    email                   String               @db.VarChar(99)
+    rssi                    Int
+    snr                     Float
 }
 
 model device_gps_datapoint {
@@ -29,7 +30,7 @@ model device_gps_datapoint {
 }
 
 model device {
-    device_id            String                 @id @map("dev_id")
+    device_id            String                 @id
     name                 String                 @db.VarChar(99)
     description          String                 @db.VarChar(99)
     device_gps_datapoint device_gps_datapoint[]
