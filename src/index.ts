@@ -5,6 +5,7 @@ import pino from 'pino';
 import BaseRoutes from './routes/base';
 import TTNMapperDatapointsRoutes from './routes/ttnmapper_datapoints';
 import DeviceSubscriptionsRoutes from './routes/device_subscriptions';
+import DevicesRoutes from './routes/devices';
 
 // Fix for nodemon crashes
 process.once('SIGUSR2', function () {
@@ -27,6 +28,7 @@ app.use(pinoHttpLogger);
 app.use(BaseRoutes);
 app.use('/device_subscriptions', DeviceSubscriptionsRoutes);
 app.use('/ttnmapper_datapoints', TTNMapperDatapointsRoutes);
+app.use('/devices', DevicesRoutes);
 
 // Run the server!
 const PORT: number = parseInt(process.env.PORT || '3000');
