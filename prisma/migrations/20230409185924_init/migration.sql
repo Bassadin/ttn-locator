@@ -26,6 +26,8 @@ CREATE TABLE "device_gps_datapoint" (
 -- CreateTable
 CREATE TABLE "device" (
     "device_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "device_pkey" PRIMARY KEY ("device_id")
 );
@@ -35,8 +37,20 @@ CREATE TABLE "gateway" (
     "gateway_id" TEXT NOT NULL,
     "latitude" DOUBLE PRECISION NOT NULL,
     "longitude" DOUBLE PRECISION NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "gateway_pkey" PRIMARY KEY ("gateway_id")
+);
+
+-- CreateTable
+CREATE TABLE "device_subscription" (
+    "id" INTEGER NOT NULL,
+    "device_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "device_subscription_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey

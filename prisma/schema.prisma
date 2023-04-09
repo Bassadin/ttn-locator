@@ -33,6 +33,8 @@ model device_gps_datapoint {
 model device {
     device_id             String                 @id
     device_gps_datapoints device_gps_datapoint[]
+    created_at            DateTime               @default(now())
+    updated_at            DateTime               @updatedAt
 }
 
 model gateway {
@@ -40,4 +42,14 @@ model gateway {
     latitude             Float
     longitude            Float
     ttnmapper_datapoints ttnmapper_datapoint[]
+    created_at           DateTime              @default(now())
+    updated_at           DateTime              @updatedAt
+}
+
+// add a model that represents subscriptions to device IDs
+model device_subscription {
+    id         Int      @id
+    device_id  String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
 }
