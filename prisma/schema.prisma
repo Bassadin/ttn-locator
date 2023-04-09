@@ -49,9 +49,8 @@ model gateway {
 
 // add a model that represents subscriptions to device IDs
 model device_subscription {
-    id         Int      @id @default(autoincrement())
+    device_id  String   @id @unique
     device     device   @relation(fields: [device_id], references: [device_id])
-    device_id  String   @unique
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 }

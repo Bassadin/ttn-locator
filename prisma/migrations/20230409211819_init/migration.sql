@@ -45,12 +45,11 @@ CREATE TABLE "gateway" (
 
 -- CreateTable
 CREATE TABLE "device_subscription" (
-    "id" SERIAL NOT NULL,
     "device_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "device_subscription_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "device_subscription_pkey" PRIMARY KEY ("device_id")
 );
 
 -- CreateIndex
