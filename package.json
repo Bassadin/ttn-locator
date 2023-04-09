@@ -10,8 +10,7 @@
         "eslint:scan": "eslint",
         "eslint:fix": "eslint --fix",
         "compose:up": "docker-compose up -d",
-        "seed": "ts-node prisma/seed.ts",
-        "migrate": "prisma migrate dev --name init"
+        "prisma:reset": "prisma migrate reset"
     },
     "devDependencies": {
         "@types/node": "^18.15",
@@ -31,5 +30,8 @@
         "@prisma/client": "^4.0",
         "fastify": "^4.15.0",
         "fastify-prisma-client": "^5.0.0"
+    },
+    "prisma": {
+        "seed": "ts-node prisma/seed.ts"
     }
 }
