@@ -9,4 +9,13 @@ router.get('/', async (request: Request, response: Response) => {
     response.send({ message: 'success', data: await prisma.device_subscription.findMany() });
 });
 
+// Add a device subscription
+router.post('/', async (request: Request, response: Response) => {
+    await prisma.device_subscription.create({
+        data: {
+            device_id: request.body.device_id,
+        },
+    });
+});
+
 export default router;
