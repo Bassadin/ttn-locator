@@ -1,10 +1,12 @@
-import { FastifyInstance } from 'fastify';
+import { PrismaClient } from '@prisma/client';
+import express, { Request, Response } from 'express';
 
-export default async function TTNMapperDatapointsRoutes(fastify: FastifyInstance, _options: any) {
-    // Create new user
-    // This is the Route for creating a new user via POST Method
-    fastify.get('/ttnmapper_datapoints', async (request, reply) => {
-        const ttnmapper_datapoints = await fastify.prisma.ttnmapper_datapoint.findMany();
-        reply.send({ message: 'success', data: ttnmapper_datapoints });
-    });
-}
+const router = express.Router();
+const prisma = new PrismaClient();
+
+router.get('/ttnmapper_datapoints', async (request: Request, response: Response) => {
+    const ttnmapper_datapoints = await prisma.ttnmapper_datapoint.findMany();
+    response.send({ message: 'success', data: ttnmapper_datapoints });
+});
+
+export default router;

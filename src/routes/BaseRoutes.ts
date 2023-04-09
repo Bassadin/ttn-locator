@@ -1,9 +1,11 @@
-import { FastifyInstance } from 'fastify';
+import express, { Request, Response } from 'express';
 
-export default async function BaseRoutes(fastify: FastifyInstance, _options: any) {
-    // 🏚️ Default Route
-    // This is the Default Route of the API
-    fastify.get('/', async (request, reply) => {
-        reply.send({ message: 'Hello from ttnmapper-reader!' });
-    });
-}
+const router = express.Router();
+
+// 🏚️ Default Route
+// This is the Default Route of the API
+router.get('/', async (request: Request, response: Response) => {
+    response.send({ message: 'Hello from ttnmapper-reader!' });
+});
+
+export default router;
