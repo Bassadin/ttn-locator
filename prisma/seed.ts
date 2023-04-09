@@ -22,7 +22,6 @@ async function main() {
         where: { id: 1 },
         update: {},
         create: {
-            id: 1,
             timestamp: new Date(),
             device: { connect: { device_id: example_device.device_id } },
             latitude: 49.0,
@@ -44,7 +43,21 @@ async function main() {
         },
     });
 
-    console.log({ example_device, example_gateway, example_device_gps_datapoint, example_ttnmapper_datapoint });
+    const example_device_subscription = await prisma.device_subscription.upsert({
+        where: { device_id: example_device.device_id },
+        update: {},
+        create: {
+            device: { connect: { device_id: example_device.device_id } },
+        },
+    });
+
+    console.log({
+        example_device,
+        example_gateway,
+        example_device_gps_datapoint,
+        example_ttnmapper_datapoint,
+        example_device_subscription,
+    });
 }
 main()
     .then(async () => {

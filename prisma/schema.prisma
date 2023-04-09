@@ -19,7 +19,7 @@ model ttnmapper_datapoint {
 }
 
 model device_gps_datapoint {
-    id                  Int                   @id
+    id                  Int                   @id @default(autoincrement())
     timestamp           DateTime
     device              device                @relation(fields: [device_dev_id], references: [device_id])
     device_dev_id       String
@@ -33,6 +33,7 @@ model device_gps_datapoint {
 model device {
     device_id             String                 @id
     device_gps_datapoints device_gps_datapoint[]
+    device_subscription   device_subscription?
     created_at            DateTime               @default(now())
     updated_at            DateTime               @updatedAt
 }
@@ -48,8 +49,9 @@ model gateway {
 
 // add a model that represents subscriptions to device IDs
 model device_subscription {
-    id         Int      @id
-    device_id  String
+    id         Int      @id @default(autoincrement())
+    device     device   @relation(fields: [device_id], references: [device_id])
+    device_id  String   @unique
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 }

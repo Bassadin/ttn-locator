@@ -12,7 +12,7 @@ CREATE TABLE "ttnmapper_datapoint" (
 
 -- CreateTable
 CREATE TABLE "device_gps_datapoint" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL,
     "device_dev_id" TEXT NOT NULL,
     "latitude" DOUBLE PRECISION NOT NULL,
@@ -45,13 +45,16 @@ CREATE TABLE "gateway" (
 
 -- CreateTable
 CREATE TABLE "device_subscription" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "device_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "device_subscription_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "device_subscription_device_id_key" ON "device_subscription"("device_id");
 
 -- AddForeignKey
 ALTER TABLE "ttnmapper_datapoint" ADD CONSTRAINT "ttnmapper_datapoint_device_gps_datapoint_id_fkey" FOREIGN KEY ("device_gps_datapoint_id") REFERENCES "device_gps_datapoint"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -61,3 +64,6 @@ ALTER TABLE "ttnmapper_datapoint" ADD CONSTRAINT "ttnmapper_datapoint_gateway_id
 
 -- AddForeignKey
 ALTER TABLE "device_gps_datapoint" ADD CONSTRAINT "device_gps_datapoint_device_dev_id_fkey" FOREIGN KEY ("device_dev_id") REFERENCES "device"("device_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "device_subscription" ADD CONSTRAINT "device_subscription_device_id_fkey" FOREIGN KEY ("device_id") REFERENCES "device"("device_id") ON DELETE RESTRICT ON UPDATE CASCADE;
