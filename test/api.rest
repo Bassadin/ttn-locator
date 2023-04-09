@@ -1,12 +1,17 @@
 // Get base route
 GET http://localhost:{{$dotenv PORT}}/
 
-###
+### TTN Mapper Datapoints
 
 // Get all tnnmapper_datapoints
 GET http://localhost:{{$dotenv PORT}}/ttnmapper_datapoints
 
-###
+### Device Subscriptions
 
 // Get all device subscriptions
 GET http://localhost:{{$dotenv PORT}}/device_subscriptions
+
+### Devices
+
+// Get all devices
+GET http://localhost:{{$dotenv PORT}}/devices
