@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node ./dist/index.js",
-        "dev": "nodemon ./src/index.ts",
+        "dev": "nodemon ./src/index.ts | pino-pretty --colorize --levelFirst",
         "build": "tsc -p .",
         "format": "prettier --write \"src/**/*.ts\"",
         "eslint:scan": "eslint",
@@ -20,7 +20,9 @@
         "eslint": "^8.37",
         "eslint-config-prettier": "^8.8",
         "eslint-plugin-prettier": "^4.2",
+        "kill-port": "^2.0.1",
         "nodemon": "^2.0",
+        "pino-pretty": "^10.0.0",
         "prettier": "^2.8.7",
         "prettier-eslint": "^15.0",
         "prisma": "^4.12.0",
