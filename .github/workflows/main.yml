@@ -44,10 +44,8 @@ jobs:
             - name: pnpm build
               run: pnpm run build
 
-            - name: pnpm prisma generate
-              run: npx prisma migrate deploy
             - name: Prisma seed
-              run: pnpm run seed
+              run: prisma migrate reset
     eslint:
         runs-on: ubuntu-latest
         steps:
