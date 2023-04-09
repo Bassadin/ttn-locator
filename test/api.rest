@@ -1,0 +1,17 @@
+### GET
+// Get base route
+GET http://localhost:{{$dotenv PORT}}/
+
+### GET
+// Get all tnnmapper_datapoints
+GET http://localhost:{{$dotenv PORT}}/ttnmapper_datapoints
+
+### POST
+// Create a new user
+POST http://localhost:{{$dotenv PORT}}/users
+Content-Type: application/json
+
+{
+  "name": "john",
+  "email": "john@gmail.com"
+}
