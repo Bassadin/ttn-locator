@@ -1,13 +1,17 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "rootDir": "./src",
         "moduleResolution": "node",
-        "baseUrl": "./",
+        "target": "ESNext",
+        "module": "CommonJS",
+        "rootDir": "./src",
+        "baseUrl": "./src",
         "esModuleInterop": true,
         "strict": true,
-        "outDir": "./dist"
+        "outDir": "./dist",
+        "paths": {
+            "src/*": ["src/*"]
+        }
     },
+    "include": ["./src"],
     "exclude": ["prisma", "node_modules", "dist"]
 }
