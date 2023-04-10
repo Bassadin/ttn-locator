@@ -7,16 +7,6 @@ import TTNMapperDatapointsRoutes from './routes/ttnmapper_datapoints';
 import DeviceSubscriptionsRoutes from './routes/device_subscriptions';
 import DevicesRoutes from './routes/devices';
 
-// Fix for nodemon crashes
-process.once('SIGUSR2', function () {
-    process.kill(process.pid, 'SIGUSR2');
-});
-
-process.on('SIGINT', function () {
-    // this is only called on ctrl+c, not restart
-    process.kill(process.pid, 'SIGINT');
-});
-
 // Fastify instance
 const app: Application = express();
 
