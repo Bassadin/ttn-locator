@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 import pinoHttp from 'pino-http';
-import pino from 'pino';
+
 
 import BaseRoutes from './routes/base';
 import TTNMapperDatapointsRoutes from './routes/ttnmapper_datapoints';
@@ -19,7 +19,7 @@ process.on('SIGINT', function () {
 
 // Fastify instance
 const app: Application = express();
-const logger = pino();
+
 const pinoHttpLogger = pinoHttp();
 
 app.use(pinoHttpLogger);
@@ -30,8 +30,4 @@ app.use('/device_subscriptions', DeviceSubscriptionsRoutes);
 app.use('/ttnmapper_datapoints', TTNMapperDatapointsRoutes);
 app.use('/devices', DevicesRoutes);
 
-// Run the server!
-const PORT: number = parseInt(process.env.PORT || '3000');
-app.listen(PORT);
-
-logger.info(`Server running on port ${PORT}`);
+export default app;
