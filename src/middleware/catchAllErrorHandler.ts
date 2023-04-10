@@ -1,10 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import logger from 'middleware/logger';
 
-export default function catchAllErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
-    if (err) {
-        res.status(500).json({ error: err.message });
-    } else {
-        // Pass the error to the next middleware function
-        next(err);
-    }
+export default function catchAllErrorHandler(err: Error, req: Request, res: Response, _next: NextFunction) {
+    logger.error('catchAllErrorHandler: ' + err.message);
+    res.status(500).json('Internal Server Error');
 }
