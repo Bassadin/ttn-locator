@@ -11,6 +11,17 @@ GET http://localhost:{{$dotenv PORT}}/ttnmapper_datapoints
 // Get all device subscriptions
 GET http://localhost:{{$dotenv PORT}}/device_subscriptions
 
+###
+
+// Add a device subscription
+
+POST http://localhost:{{$dotenv PORT}}/device_subscriptions HTTP/1.1
+content-type: application/json
+
+{
+    "device_id": "elv-long-boi"
+}
+
 ### Devices
 
 // Get all devices
