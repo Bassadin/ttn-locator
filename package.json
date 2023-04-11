@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node dist/server.js",
-        "dev": "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./src/server.ts | pino-pretty --colorize --levelFirst",
+        "dev": "nodemon | pino-pretty --colorize --levelFirst",
         "build": "tsc -p .",
         "prettier:format": "prettier --write \"src/**/*.ts\"",
         "eslint:scan": "eslint",
@@ -44,5 +44,18 @@
     },
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
+    },
+    "nodemonConfig": {
+        "ignore": [
+            "**/*.test.ts",
+            "**/*.spec.ts",
+            ".git",
+            "node_modules"
+        ],
+        "watch": [
+            "src"
+        ],
+        "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/server.ts",
+        "ext": "ts, js"
     }
 }
