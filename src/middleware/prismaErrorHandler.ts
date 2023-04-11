@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { Request, Response, NextFunction } from 'express';
-import logger from 'middleware/logger';
+import logger from 'src/middleware/logger';
 
 export default function prismaErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
     logger.debug('prismaErrorHandler: ' + err.message);

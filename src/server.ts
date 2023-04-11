@@ -1,5 +1,5 @@
-import app from 'app';
-import logger from 'middleware/logger';
+import logger from 'src/middleware/logger';
+import app from 'src/app';
 
 // Fix for nodemon crashes
 process.once('SIGUSR2', function () {
