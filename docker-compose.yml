@@ -9,7 +9,7 @@ services:
         ports:
             - "${PORT}:${PORT}"
         environment:
-            - DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ttnmapper-reader"
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttnmapper-reader
     db:
         image: postgres
         environment:
