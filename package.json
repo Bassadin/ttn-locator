@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
-        "start": "node dist/server.js",
+        "start": "node dist/src/server.js",
         "dev": "nodemon | pino-pretty --colorize --levelFirst",
-        "build": "tsc -p .",
+        "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
         "prettier:format": "prettier --write \"src/**/*.ts\"",
         "eslint:scan": "eslint",
         "eslint:fix": "eslint --fix",
@@ -33,6 +33,7 @@
         "supertest": "^6.3.3",
         "ts-jest": "^29.1.0",
         "ts-node": "^10.9.1",
+        "tsc-alias": "^1.8.5",
         "tsconfig-paths": "^4.2.0",
         "typescript": "^5.0"
     },

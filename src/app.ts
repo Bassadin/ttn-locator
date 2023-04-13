@@ -2,14 +2,14 @@ import express, { Application } from 'express';
 import pinoHttp from 'pino-http';
 
 // Routes
-import BaseRoutes from 'src/routes/base';
-import TTNMapperDatapointsRoutes from 'src/routes/ttnmapper_datapoints';
-import DeviceSubscriptionsRoutes from 'src/routes/device_subscriptions';
-import DevicesRoutes from 'src/routes/devices';
+import BaseRoutes from '@/routes/base';
+import TTNMapperDatapointsRoutes from '@/routes/ttnmapper_datapoints';
+import DeviceSubscriptionsRoutes from '@/routes/device_subscriptions';
+import DevicesRoutes from '@/routes/devices';
 
 // Error handler
-import prismaErrorHandler from 'src/middleware/prismaErrorHandler';
-import catchAllErrorHandler from 'src/middleware/catchAllErrorHandler';
+import prismaErrorHandler from '@/middleware/prismaErrorHandler';
+import catchAllErrorHandler from '@/middleware/catchAllErrorHandler';
 
 // Fastify instance
 const app: Application = express();

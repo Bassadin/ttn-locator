@@ -3,13 +3,13 @@
         "moduleResolution": "node",
         "target": "ESNext",
         "module": "CommonJS",
-        "rootDir": "./",
-        "baseUrl": "./",
+        "baseUrl": ".",
         "esModuleInterop": true,
         "strict": true,
         "outDir": "./dist",
+        "resolveJsonModule": true,
         "paths": {
-            "src/*": ["src/*"]
+            "@/*": ["src/*"]
         }
     }
 }
