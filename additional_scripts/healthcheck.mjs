@@ -1,9 +1,9 @@
 import * as http from 'node:http';
 
 const options = {
-    host: 'localhost',
+    host: 'ttnmapper-reader',
     path: '/',
-    port: process.env.NUXT_PORT,
+    port: process.env.PORT,
     timeout: 2000,
 };
 
