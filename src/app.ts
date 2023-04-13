@@ -11,6 +11,9 @@ import DevicesRoutes from '@/routes/devices';
 import prismaErrorHandler from '@/middleware/prismaErrorHandler';
 import catchAllErrorHandler from '@/middleware/catchAllErrorHandler';
 
+// Scheduled jobs
+import GetNewTTNMapperDataCronJob from './scheduledFunctions/getNewTTNMapperData';
+
 // Fastify instance
 const app: Application = express();
 
@@ -30,5 +33,8 @@ app.use('/devices', DevicesRoutes);
 // Error handler
 app.use(prismaErrorHandler);
 app.use(catchAllErrorHandler);
+
+// Init scheduled jobs
+GetNewTTNMapperDataCronJob.initScheduledJob();
 
 export default app;
