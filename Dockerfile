@@ -24,7 +24,7 @@ RUN pnpm build
 EXPOSE ${PORT}
 
 # Health check
-HEALTHCHECK --timeout=10s CMD node ./additional_scripts/healthcheck.mjs
+HEALTHCHECK CMD node ./additional_scripts/healthcheck.mjs
 
 # Start the server using the production build
 CMD pnpm start

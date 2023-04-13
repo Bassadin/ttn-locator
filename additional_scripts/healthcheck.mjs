@@ -1,11 +1,12 @@
 import * as http from 'node:http';
 
 const options = {
-    host: 'ttnmapper-reader',
-    path: '/',
+    host: 'localhost',
     port: process.env.PORT,
-    timeout: 2000,
+    timeout: 1200,
 };
+
+console.log(`Checking healthcheck on ${options.host}:${options.port}...`);
 
 const request = http.request(options, (res) => {
     console.log(`STATUS: ${res.statusCode}`);

@@ -11,6 +11,8 @@ services:
             - "${PORT}:${PORT}"
         environment:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttnmapper-reader
+            # The healthcheck needs this to be set
+            - PORT=3000
     db:
         image: postgres
         environment:
