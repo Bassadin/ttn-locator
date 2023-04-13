@@ -13,12 +13,13 @@ RUN pnpm fetch
 
 COPY . ./
 RUN pnpm install --offline
-RUN pnpm build
 
-EXPOSE 3000
+RUN npx prisma generate
+
+EXPOSE ${PORT}
 
 # Health check
 HEALTHCHECK --timeout=10s CMD node ./additional_scripts/healthcheck.mjs
 
 # Start the server using the production build
-CMD [ "node", "dist/main.js" ]
+CMD pnpm dev

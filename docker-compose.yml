@@ -1,15 +1,15 @@
 ---
 version: "3"
 services:
-    # ttnmapper-reader:
-    #     build: .
-    #     restart: always
-    #     ports:
-    #         # Backend API
-    #         - "3000:3000"
-    #     depends_on:
-    #         - db
-    #         - rabbitmq
+    ttnmapper-reader:
+        build: .
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - "${PORT}:${PORT}"
+        environment:
+            - DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ttnmapper-reader"
     db:
         image: postgres
         environment:
