@@ -10,6 +10,7 @@
         "eslint:fix": "eslint --fix",
         "compose:up": "docker-compose up -d",
         "prisma:reset": "prisma migrate reset",
+        "prisma:generate": "prisma generate",
         "jest:coverage": "jest --coverage",
         "jest:test": "jest"
     },
