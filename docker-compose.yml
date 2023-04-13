@@ -2,6 +2,7 @@
 version: "3"
 services:
     ttnmapper-reader:
+        image: ghcr.io/bassadin/ttnmapper-reader:latest
         build: .
         restart: always
         depends_on:
