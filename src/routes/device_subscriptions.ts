@@ -11,9 +11,11 @@ router.get('/', async (request: Request, response: Response) => {
 
 // Add a device subscription
 router.post('/', async (request: Request, response: Response) => {
-    const newSubscription = await prisma.device_subscription.create({
-        data: {
-            device_id: request.body.device_id,
+    const newSubscription = await prisma.device_subscription.upsert({
+        where: { device_id: request.body.device_id },
+        update: {},
+        create: {
+            device: { connect: { device_id: request.body.device_id } },
         },
     });
     response.send({ message: 'success', data: newSubscription });

@@ -14,4 +14,16 @@ describe('Test device_subscriptions routes', () => {
             ]),
         );
     });
+
+    test('Add a device_subscription route', async () => {
+        const res = await request(app).post('/device_subscriptions/').send({
+            device_id: 'loris-tracker-hfu',
+        });
+        expect(res.statusCode).toEqual(200);
+    });
+
+    test('Test add device_subscription route without valid parameter', async () => {
+        const res = await request(app).post('/device_subscriptions/').send({});
+        expect(res.statusCode).toEqual(500);
+    });
 });
