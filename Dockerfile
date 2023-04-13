@@ -17,5 +17,8 @@ RUN pnpm build
 
 EXPOSE 3000
 
+# Health check
+HEALTHCHECK --timeout=10s CMD node ./additional_scripts/healthcheck.mjs
+
 # Start the server using the production build
 CMD [ "node", "dist/main.js" ]
