@@ -35,6 +35,8 @@ app.use(prismaErrorHandler);
 app.use(catchAllErrorHandler);
 
 // Init scheduled jobs
-GetNewTTNMapperDataCronJob.initScheduledJob();
+if (process.env.NODE_ENV != 'TEST') {
+    GetNewTTNMapperDataCronJob.initScheduledJob();
+}
 
 export default app;

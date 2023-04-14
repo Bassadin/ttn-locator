@@ -10,6 +10,7 @@ const config: Config = {
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
     // moduleDirectories: ['node_modules', 'src/*'],
     // moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+    setupFiles: ['<rootDir>/jest.setup.ts'],
 };
 
 export default config;
