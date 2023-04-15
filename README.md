@@ -4,6 +4,10 @@ Part of my [Master's Thesis in summer semester 2023](https://github.com/Bassadin
 
 A simple "microservice" that reads data from TTNMapper and stores it in a PostgreSQL database.
 
+## Important note
+
+**Not at all production-ready yet!**
+
 ## 🍔 Stack Specs
 
 - Node.js
