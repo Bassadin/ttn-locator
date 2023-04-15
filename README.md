@@ -2,7 +2,10 @@
 
 Part of my [Master's Thesis in summer semester 2023](https://github.com/Bassadin/Master-Thesis-INM)
 
-A simple "microservice" that reads data from TTNMapper and stores it in a PostgreSQL database.
+A simple service that reads data from TTNMapper and stores it in a PostgreSQL database.
+Supports device subscriptions from which it will pull data from TTNMapper to get RSSI and GPS data according to the gateways that received the signal.
+
+The goal is to write queries that can determine a device's location based on the RSSI and/or ToA data alone.
 
 ## Important note
 
