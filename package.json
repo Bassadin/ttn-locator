@@ -15,7 +15,8 @@
         "prisma:studio": "prisma studio",
         "jest:coverage": "jest --coverage",
         "jest:test": "jest",
-        "jest:watch": "jest --watch"
+        "jest:watch": "jest --watch",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@types/cron": "^2.0.1",
@@ -39,7 +40,8 @@
         "ts-node": "^10.9.1",
         "tsc-alias": "^1.8.5",
         "tsconfig-paths": "^4.2.0",
-        "typescript": "^5.0.4"
+        "typescript": "^5.0.4",
+        "husky": "^8.0.0"
     },
     "dependencies": {
         "@prisma/client": "^4.12.0",
