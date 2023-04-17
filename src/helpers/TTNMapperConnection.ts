@@ -4,7 +4,7 @@ import superagent from 'superagent';
 export default class TTNMapperConnection {
     public static async getNewTTNMapperDataForDevice(
         deviceID: string,
-        daysToGetDataFor = 7,
+        daysToGetDataFor = 14,
     ): Promise<superagent.Response> {
         if (daysToGetDataFor < 1) {
             throw new Error('daysToGetDataFor must be greater than 0');
