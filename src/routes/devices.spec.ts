@@ -9,9 +9,14 @@ describe('Test devices routes', () => {
         expect(res.body.data).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
-                    device_id: 'loris-tracker-hfu',
+                    device_id: 'loris-hfu-001',
                 }),
             ]),
         );
+    });
+
+    test('Get TTNMapper API route with valid device id', async () => {
+        const res = await request(app).get('/devices/ttnmapper_api/loris-tracker-hfu');
+        expect(res.statusCode).toEqual(200);
     });
 });
