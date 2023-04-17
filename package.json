@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
-        "start": "node dist/src/server.js",
-        "dev": "nodemon | pino-pretty --colorize --levelFirst",
+        "start": "node -r dotenv/config dist/src/server.js",
+        "dev": "nodemon | pino-pretty --colorize",
         "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
         "prettier:format": "prettier --write \"src/**/*.ts\"",
         "eslint:scan": "eslint",
@@ -44,6 +44,7 @@
         "@prisma/client": "^4.12.0",
         "@types/superagent": "^4.1.16",
         "cron": "^2.3.0",
+        "dotenv": "^16.0.3",
         "express": "5.0.0-beta.1",
         "pino": "^8.11.0",
         "pino-http": "^8.3.3",
@@ -62,7 +63,7 @@
         "watch": [
             "src"
         ],
-        "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/server.ts",
+        "exec": "node -r tsconfig-paths/register -r ts-node/register -r dotenv/config ./src/server.ts",
         "ext": "ts, js"
     }
 }

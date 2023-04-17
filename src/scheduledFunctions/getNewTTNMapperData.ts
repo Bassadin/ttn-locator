@@ -22,7 +22,9 @@ export default class GetNewTTNMapperDataCronJob {
         for (const eachDevice of subscribedDevices) {
             const apiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(eachDevice.deviceId);
             for (const eachTTNMapperData of apiResponse.body) {
-                logger.debug(`Inserting new TTNMapper data ${eachTTNMapperData} for Device ${eachDevice.deviceId}`);
+                logger.debug(
+                    `Inserting new TTNMapper data ${eachTTNMapperData.database_id} for Device ${eachDevice.deviceId}`,
+                );
             }
         }
     }
