@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import TTNMapperConnection from '@/helpers/TTNMapperConnection';
 
 const prisma = new PrismaClient();
 
@@ -33,5 +34,17 @@ describe('Test TTNMapperConnection class', () => {
         }).rejects.toThrowError();
 
         await prisma.deviceGPSDatapoint.deleteMany({ where: dataForExampleGPSDatapoint });
+    });
+
+    test('Calling getNewTTNMapperDataForDevice() method with negative amount of days', async () => {
+        expect(async () => {
+            await TTNMapperConnection.getNewTTNMapperDataForDevice('test', -1);
+        }).rejects.toThrowError();
+    });
+
+    test('Calling getNewTTNMapperDataForDevice() method without device id', async () => {
+        expect(async () => {
+            await TTNMapperConnection.getNewTTNMapperDataForDevice('', 1);
+        }).rejects.toThrowError();
     });
 });
