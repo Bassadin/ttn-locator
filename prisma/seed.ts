@@ -3,10 +3,10 @@ const prisma = new PrismaClient();
 
 async function main() {
     const example_device = await prisma.device.upsert({
-        where: { device_id: 'loris-tracker-hfu' },
+        where: { device_id: 'loris-hfu-001' },
         update: {},
         create: {
-            device_id: 'loris-tracker-hfu',
+            device_id: 'loris-hfu-001',
         },
     });
     const example_gateway = await prisma.gateway.upsert({
