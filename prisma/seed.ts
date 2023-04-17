@@ -16,13 +16,14 @@ async function main() {
             gatewayId: 'mikrotik-lr8-001',
             latitude: 49.0,
             longitude: 8.0,
+            altitude: 42.0,
         },
     });
     const exampleDeviceGPSDatapoint = await prisma.deviceGPSDatapoint.upsert({
         where: { id: 1 },
         update: {},
         create: {
-            timestamp: new Date(),
+            timestamp: new Date(2000, 1, 1),
             device: { connect: { deviceId: exampleDevice.deviceId } },
             latitude: 49.0,
             longitude: 8.0,

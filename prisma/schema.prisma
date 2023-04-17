@@ -21,14 +21,16 @@ model TtnMapperDatapoint {
 
 model DeviceGPSDatapoint {
     id                 Int                  @id @default(autoincrement())
-    timestamp          DateTime
-    device             Device               @relation(fields: [deviceDevId], references: [deviceId])
-    deviceDevId        String
+    timestamp          DateTime             @db.Timestamp(6) // 6 digits of precision for the fractional seconds
+    device             Device               @relation(fields: [deviceId], references: [deviceId])
+    deviceId           String
     latitude           Float
     longitude          Float
     altitude           Float
     hdop               Float
     ttnMapperDatapoint TtnMapperDatapoint[]
+
+    @@unique([deviceId, timestamp])
 }
 
 model Device {
@@ -43,6 +45,7 @@ model Gateway {
     gatewayId           String               @id
     latitude            Float
     longitude           Float
+    altitude            Float
     ttnmapperDatapoints TtnMapperDatapoint[]
     createdAt           DateTime             @default(now())
     updatedAt           DateTime             @updatedAt
