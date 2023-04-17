@@ -12,6 +12,7 @@
         "compose:up": "docker-compose up -d",
         "prisma:reset": "prisma migrate reset",
         "prisma:generate": "prisma generate",
+        "prisma:studio": "prisma studio",
         "jest:coverage": "jest --coverage",
         "jest:test": "jest",
         "jest:watch": "jest --watch"
