@@ -2,13 +2,14 @@ import { CronJob } from 'cron';
 import { PrismaClient } from '@prisma/client';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
 import logger from '@/middleware/logger';
+import GatewayLocationGetter from '@/helpers/GatewayLocationGetter';
 
 export default class GetNewTTNMapperDataCronJob {
     private static prisma = new PrismaClient();
 
     public static initScheduledJob(): void {
-        // https://crontab.guru/#*/*_*_*_*_*
-        const ttnmapperJob = new CronJob('* * * * *', () => {
+        // https://crontab.guru/#0_*/2_*_*_* (Every 2 hours)
+        const ttnmapperJob = new CronJob('0 */2 * * *', () => {
             // TTNMapperConnection.getNewTTNMapperDataForDevice();
             console.log("I'm executed every minute!");
         });
@@ -18,12 +19,15 @@ export default class GetNewTTNMapperDataCronJob {
 
     public static async getNewTTNMapperDataForSubscribedDevices() {
         const subscribedDevices = await this.prisma.deviceSubscription.findMany();
-        logger.info(`Fetching data from TTN Mapper API for ${subscribedDevices.length} subscribed devices`);
+        logger.info(`=> Fetching data from TTN Mapper API for ${subscribedDevices.length} subscribed devices`);
+
+        const gatewayIDsToUpdate: Set<string> = new Set();
+
         for (const eachDeviceSubscription of subscribedDevices) {
             const apiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(eachDeviceSubscription.deviceId);
             for (const eachTTNMapperAPIDatapoint of apiResponse.body) {
                 logger.debug(
-                    `Inserting new TTNMapper data ${eachTTNMapperAPIDatapoint.database_id} for Device ${eachDeviceSubscription.deviceId}`,
+                    `=> Inserting new TTNMapper data ${eachTTNMapperAPIDatapoint.database_id} for Device ${eachDeviceSubscription.deviceId}`,
                 );
 
                 const deviceGPSDatapoint = await this.prisma.deviceGPSDatapoint.upsert({
@@ -59,7 +63,9 @@ export default class GetNewTTNMapperDataCronJob {
                     },
                 });
 
-                await this.prisma.ttnMapperDatapoint.upsert({
+                gatewayIDsToUpdate.add(gateway.gatewayId);
+
+                this.prisma.ttnMapperDatapoint.upsert({
                     where: { id: eachTTNMapperAPIDatapoint.database_id },
                     update: {},
                     create: {
@@ -73,5 +79,31 @@ export default class GetNewTTNMapperDataCronJob {
                 });
             }
         }
+
+        logger.info(`Finished fetching data from TTN Mapper API for ${subscribedDevices.length} subscribed devices`);
+
+        // Update the gateway locations
+        logger.info(`Updating ${gatewayIDsToUpdate.size} gateway locations`);
+        for (const eachGatewayID of gatewayIDsToUpdate) {
+            this.updateGatewayLocation(eachGatewayID);
+        }
+        logger.info(`Finished updating ${gatewayIDsToUpdate.size} gateway locations`);
+    }
+
+    private static async updateGatewayLocation(gatewayID: string): Promise<void> {
+        GatewayLocationGetter.getGatewayLocation(gatewayID)
+            .then((gatewayLocation) => {
+                this.prisma.gateway.update({
+                    where: { gatewayId: gatewayID },
+                    data: {
+                        latitude: gatewayLocation.latitude,
+                        longitude: gatewayLocation.longitude,
+                        altitude: gatewayLocation.altitude,
+                    },
+                });
+            })
+            .catch((error) => {
+                logger.debug(`Error getting location for gateway ${gatewayID}: ${error}`);
+            });
     }
 }
