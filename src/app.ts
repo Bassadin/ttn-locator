@@ -35,8 +35,11 @@ app.use(prismaErrorHandler);
 app.use(catchAllErrorHandler);
 
 // Init scheduled jobs
+/* istanbul ignore if  */
 if (process.env.NODE_ENV != 'TEST') {
     GetNewTTNMapperDataCronJob.initScheduledJob();
 }
+
+GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
 
 export default app;
