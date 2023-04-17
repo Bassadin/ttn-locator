@@ -14,26 +14,24 @@ describe('Test TTNMapperConnection class', () => {
 
         const dataForExampleGPSDatapoint = {
             timestamp: new Date(2005, 1, 1),
-            device: { connect: { deviceId: exampleDevice.deviceId } },
             latitude: 333.0,
             longitude: 999.0,
             altitude: 1337.0,
             hdop: 0.0,
         };
 
-        await prisma.deviceGPSDatapoint.deleteMany({
-            where: {
-                timestamp: dataForExampleGPSDatapoint.timestamp,
-                latitude: dataForExampleGPSDatapoint.latitude,
-                longitude: dataForExampleGPSDatapoint.longitude,
-                altitude: dataForExampleGPSDatapoint.altitude,
-            },
+        await prisma.deviceGPSDatapoint.deleteMany({ where: dataForExampleGPSDatapoint });
+
+        await prisma.deviceGPSDatapoint.create({
+            data: { ...dataForExampleGPSDatapoint, device: { connect: { deviceId: exampleDevice.deviceId } } },
         });
 
-        await prisma.deviceGPSDatapoint.create({ data: dataForExampleGPSDatapoint });
-
         expect(async () => {
-            await prisma.deviceGPSDatapoint.create({ data: dataForExampleGPSDatapoint });
+            await prisma.deviceGPSDatapoint.create({
+                data: { ...dataForExampleGPSDatapoint, device: { connect: { deviceId: exampleDevice.deviceId } } },
+            });
         }).rejects.toThrowError();
+
+        await prisma.deviceGPSDatapoint.deleteMany({ where: dataForExampleGPSDatapoint });
     });
 });
