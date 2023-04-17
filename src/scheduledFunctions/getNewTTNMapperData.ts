@@ -17,12 +17,12 @@ export default class GetNewTTNMapperDataCronJob {
     }
 
     public static async getNewTTNMapperDataForSubscribedDevices() {
-        const subscribedDevices = await this.prisma.device_subscription.findMany();
+        const subscribedDevices = await this.prisma.deviceSubscription.findMany();
         logger.info(`Fetching data from TTN Mapper API for ${subscribedDevices.length} subscribed devices`);
         for (const eachDevice of subscribedDevices) {
-            const apiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(eachDevice.device_id);
+            const apiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(eachDevice.deviceId);
             for (const eachTTNMapperData of apiResponse.body) {
-                logger.debug(`Inserting new TTNMapper data ${eachTTNMapperData} for device ${eachDevice.device_id}`);
+                logger.debug(`Inserting new TTNMapper data ${eachTTNMapperData} for Device ${eachDevice.deviceId}`);
             }
         }
     }

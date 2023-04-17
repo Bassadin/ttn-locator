@@ -19,7 +19,7 @@ POST http://localhost:{{$dotenv PORT}}/device_subscriptions HTTP/1.1
 content-type: application/json
 
 {
-    "device_id": "elv-long-boi"
+    "deviceId": "elv-long-boi"
 }
 
 ### Devices

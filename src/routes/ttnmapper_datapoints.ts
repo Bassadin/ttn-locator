@@ -5,7 +5,7 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.get('/', async (request: Request, response: Response) => {
-    const ttnmapper_datapoints = await prisma.ttnmapper_datapoint.findMany();
+    const ttnmapper_datapoints = await prisma.ttnMapperDatapoint.findMany();
     response.send({ message: 'success', data: ttnmapper_datapoints });
 });
 

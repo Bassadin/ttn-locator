@@ -7,50 +7,51 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model ttnmapper_datapoint {
-    id                      Int                  @id
-    timestamp               DateTime
-    device_gps_datapoint    device_gps_datapoint @relation(fields: [device_gps_datapoint_id], references: [id])
-    device_gps_datapoint_id Int
-    gateway                 gateway              @relation(fields: [gateway_id], references: [gateway_id])
-    gateway_id              String
-    rssi                    Int
-    snr                     Float
+// TTN is not completely capitalized since Prisma makes the first letter lowercase when generating the model
+model TtnMapperDatapoint {
+    id                   Int                @id
+    timestamp            DateTime
+    deviceGPSDatapoint   DeviceGPSDatapoint @relation(fields: [deviceGPSDatapointId], references: [id])
+    deviceGPSDatapointId Int
+    gateway              Gateway            @relation(fields: [gatewayId], references: [gatewayId])
+    gatewayId            String
+    rssi                 Int
+    snr                  Float
 }
 
-model device_gps_datapoint {
-    id                  Int                   @id @default(autoincrement())
-    timestamp           DateTime
-    device              device                @relation(fields: [device_dev_id], references: [device_id])
-    device_dev_id       String
+model DeviceGPSDatapoint {
+    id                 Int                  @id @default(autoincrement())
+    timestamp          DateTime
+    device             Device               @relation(fields: [deviceDevId], references: [deviceId])
+    deviceDevId        String
+    latitude           Float
+    longitude          Float
+    altitude           Float
+    hdop               Float
+    ttnMapperDatapoint TtnMapperDatapoint[]
+}
+
+model Device {
+    deviceId            String               @id
+    deviceGPSDatapoints DeviceGPSDatapoint[]
+    deviceSubscription  DeviceSubscription?
+    createdAt           DateTime             @default(now())
+    updatedAt           DateTime             @updatedAt
+}
+
+model Gateway {
+    gatewayId           String               @id
     latitude            Float
     longitude           Float
-    altitude            Float
-    hdop                Float
-    ttnmapper_datapoint ttnmapper_datapoint[]
+    ttnmapperDatapoints TtnMapperDatapoint[]
+    createdAt           DateTime             @default(now())
+    updatedAt           DateTime             @updatedAt
 }
 
-model device {
-    device_id             String                 @id
-    device_gps_datapoints device_gps_datapoint[]
-    device_subscription   device_subscription?
-    created_at            DateTime               @default(now())
-    updated_at            DateTime               @updatedAt
-}
-
-model gateway {
-    gateway_id           String                @id
-    latitude             Float
-    longitude            Float
-    ttnmapper_datapoints ttnmapper_datapoint[]
-    created_at           DateTime              @default(now())
-    updated_at           DateTime              @updatedAt
-}
-
-// add a model that represents subscriptions to device IDs
-model device_subscription {
-    device_id  String   @id @unique
-    device     device   @relation(fields: [device_id], references: [device_id])
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
+// add a model that represents subscriptions to Device IDs
+model DeviceSubscription {
+    deviceId  String   @id @unique
+    device    Device   @relation(fields: [deviceId], references: [deviceId])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

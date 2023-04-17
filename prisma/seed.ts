@@ -2,60 +2,60 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    const example_device = await prisma.device.upsert({
-        where: { device_id: 'loris-hfu-001' },
+    const exampleDevice = await prisma.device.upsert({
+        where: { deviceId: 'loris-hfu-001' },
         update: {},
         create: {
-            device_id: 'loris-hfu-001',
+            deviceId: 'loris-hfu-001',
         },
     });
-    const example_gateway = await prisma.gateway.upsert({
-        where: { gateway_id: 'mikrotik-lr8-001' },
+    const exampleGateway = await prisma.gateway.upsert({
+        where: { gatewayId: 'mikrotik-lr8-001' },
         update: {},
         create: {
-            gateway_id: 'mikrotik-lr8-001',
+            gatewayId: 'mikrotik-lr8-001',
             latitude: 49.0,
             longitude: 8.0,
         },
     });
-    const example_device_gps_datapoint = await prisma.device_gps_datapoint.upsert({
+    const exampleDeviceGPSDatapoint = await prisma.deviceGPSDatapoint.upsert({
         where: { id: 1 },
         update: {},
         create: {
             timestamp: new Date(),
-            device: { connect: { device_id: example_device.device_id } },
+            device: { connect: { deviceId: exampleDevice.deviceId } },
             latitude: 49.0,
             longitude: 8.0,
             altitude: 0.0,
             hdop: 0.0,
         },
     });
-    const example_ttnmapper_datapoint = await prisma.ttnmapper_datapoint.upsert({
+    const exampleTTNmapperDatapoint = await prisma.ttnMapperDatapoint.upsert({
         where: { id: 1 },
         update: {},
         create: {
             id: 1,
             timestamp: new Date(),
-            device_gps_datapoint: { connect: { id: example_device_gps_datapoint.id } },
-            gateway: { connect: { gateway_id: example_gateway.gateway_id } },
+            deviceGPSDatapoint: { connect: { id: exampleDeviceGPSDatapoint.id } },
+            gateway: { connect: { gatewayId: exampleGateway.gatewayId } },
             rssi: 42,
             snr: 2,
         },
     });
 
-    const example_device_subscription = await prisma.device_subscription.upsert({
-        where: { device_id: example_device.device_id },
+    const example_device_subscription = await prisma.deviceSubscription.upsert({
+        where: { deviceId: exampleDevice.deviceId },
         update: {},
         create: {
-            device: { connect: { device_id: example_device.device_id } },
+            device: { connect: { deviceId: exampleDevice.deviceId } },
         },
     });
 
     console.log({
-        example_device,
-        example_gateway,
-        example_device_gps_datapoint,
-        example_ttnmapper_datapoint,
+        example_device: exampleDevice,
+        example_gateway: exampleGateway,
+        example_device_gps_datapoint: exampleDeviceGPSDatapoint,
+        example_ttnmapper_datapoint: exampleTTNmapperDatapoint,
         example_device_subscription,
     });
 }
