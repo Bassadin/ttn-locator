@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
 import logger from '@/middleware/logger';
 import GatewayLocationGetter from '@/helpers/GatewayLocationGetter';
+import GatewayLocation from '@/dataclasses/GatewayLocation';
 
 export default class GetNewTTNMapperDataCronJob {
     private static prisma = new PrismaClient();
@@ -48,6 +49,7 @@ export default class GetNewTTNMapperDataCronJob {
                     update: {},
                 });
 
+                // Locations will be updated later
                 const gateway = await this.prisma.gateway.upsert({
                     where: { gatewayId: eachTTNMapperAPIDatapoint.gateway_id },
                     create: {
@@ -56,11 +58,7 @@ export default class GetNewTTNMapperDataCronJob {
                         longitude: 0,
                         altitude: 0,
                     },
-                    update: {
-                        latitude: 0,
-                        longitude: 0,
-                        altitude: 0,
-                    },
+                    update: {},
                 });
 
                 gatewayIDsToUpdate.add(gateway.gatewayId);
@@ -90,10 +88,11 @@ export default class GetNewTTNMapperDataCronJob {
         logger.info(`Finished updating ${gatewayIDsToUpdate.size} gateway locations`);
     }
 
-    private static async updateGatewayLocation(gatewayID: string): Promise<void> {
+    public static async updateGatewayLocation(gatewayID: string): Promise<void> {
         GatewayLocationGetter.getGatewayLocation(gatewayID)
-            .then((gatewayLocation) => {
-                this.prisma.gateway.update({
+            .then(async (gatewayLocation: GatewayLocation) => {
+                // TODO: Why is the await needed here?
+                await this.prisma.gateway.update({
                     where: { gatewayId: gatewayID },
                     data: {
                         latitude: gatewayLocation.latitude,
@@ -101,6 +100,7 @@ export default class GetNewTTNMapperDataCronJob {
                         altitude: gatewayLocation.altitude,
                     },
                 });
+                logger.debug(`Updated location for gateway ${gatewayID}`);
             })
             .catch((error) => {
                 logger.debug(`Error getting location for gateway ${gatewayID}: ${error}`);
