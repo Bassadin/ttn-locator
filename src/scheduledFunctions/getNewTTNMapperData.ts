@@ -8,6 +8,7 @@ import GatewayLocation from '@/dataclasses/GatewayLocation';
 export default class GetNewTTNMapperDataCronJob {
     private static prisma = new PrismaClient();
 
+    /* istanbul ignore next */
     public static initScheduledJob(): void {
         // https://crontab.guru/#0_*/2_*_*_* (Every 2 hours)
         const ttnmapperJob = new CronJob('0 */2 * * *', () => {
