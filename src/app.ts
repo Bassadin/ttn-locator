@@ -36,7 +36,7 @@ app.use(catchAllErrorHandler);
 
 // Init scheduled jobs
 /* istanbul ignore next  */
-if (process.env.NODE_ENV != 'TEST') {
+if (process.env.NODE_ENV != 'testing') {
     GetNewTTNMapperDataCronJob.initScheduledJob();
 }
 
