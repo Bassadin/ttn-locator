@@ -8,7 +8,25 @@ const prisma = new PrismaClient();
 
 // Get all device GPS datapoints
 router.get('/', async (request: Request, response: Response) => {
-    const deviceGPSDatapoints = await prisma.deviceGPSDatapoint.findMany();
+    const minTTNMapperDatapoints = request.query.min_ttnmapper_datapoints;
+
+    let deviceGPSDatapoints;
+
+    if (minTTNMapperDatapoints) {
+        // TODO use prisma client instead of raw query as soon as possible
+        deviceGPSDatapoints = await prisma.$queryRaw`
+            SELECT *
+            FROM "DeviceGPSDatapoint"
+            WHERE (
+                SELECT COUNT(*)
+                FROM "TtnMapperDatapoint"
+                WHERE "DeviceGPSDatapoint".id = "TtnMapperDatapoint"."deviceGPSDatapointId"
+            ) >= 3
+        `;
+    } else {
+        deviceGPSDatapoints = await prisma.deviceGPSDatapoint.findMany();
+    }
+
     response.send({
         data: deviceGPSDatapoints,
     });
@@ -26,12 +44,6 @@ router.get('/:id/ttnmapper_datapoints', async (request: Request, response: Respo
     response.send({
         data: ttnMapperDatapoints,
     });
-});
-
-// Get device GPS datapoint with 3 ttnmapper datapoints or more
-router.get('/with_3_or_more_ttnmapper_datapoints', async (request: Request, response: Response) => {
-    // TODO
-    response.status(200).send();
 });
 
 export default router;

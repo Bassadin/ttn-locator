@@ -3,7 +3,7 @@ import request from 'supertest';
 
 describe('Test device_gps_datapoints routes', () => {
     test('Get all device_gps_datapoints route', async () => {
-        const response = await request(app).get(`/device_gps_datapoints/`);
+        const response = await request(app).get(`/device_gps_datapoints`);
 
         expect(response.statusCode).toEqual(200);
         // check if data array is at least 1 long
@@ -16,5 +16,11 @@ describe('Test device_gps_datapoints routes', () => {
         expect(response.statusCode).toEqual(200);
         // check if data array is at least 1 long
         expect(response.body.data.length).toEqual(1);
+    });
+
+    test('Get all device_gps_datapoints with min_ttnmapper_datapoints route', async () => {
+        const response = await request(app).get(`/device_gps_datapoints?min_ttnmapper_datapoints=3`);
+
+        expect(response.statusCode).toEqual(200);
     });
 });

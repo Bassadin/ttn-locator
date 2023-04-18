@@ -32,3 +32,15 @@ GET http://localhost:{{$dotenv PORT}}/devices
 // Get data from specific device from ttnmapper
 
 GET http://localhost:{{$dotenv PORT}}/devices/ttnmapper_api/loris-hfu-001
+
+### Device GPS Datapoints
+
+// Get all device gps datapoints
+
+GET http://localhost:{{$dotenv PORT}}/device_gps_datapoints
+
+###
+
+// Get all device gps datapoints with 3 or more ttnmapper datapoints
+
+GET http://localhost:{{$dotenv PORT}}/device_gps_datapoints?min_ttnmapper_datapoints=3
