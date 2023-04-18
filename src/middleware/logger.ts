@@ -10,14 +10,8 @@ if (process.env.NODE_ENV === 'testing') {
 
 const logger = pino(loggerOptions);
 
-logger.info(`Logger initialized, using options: ${JSON.stringify(loggerOptions)}`);
-
 /* istanbul ignore if  */
-if (process.env.NODE_ENV === 'development') {
-    logger.level = 'debug';
-}
-
-if (process.env.NODE_ENV === 'testing') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing') {
     logger.level = 'debug';
 }
 
