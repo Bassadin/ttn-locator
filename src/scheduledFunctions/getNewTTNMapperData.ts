@@ -65,7 +65,7 @@ export default class GetNewTTNMapperDataCronJob {
 
                 gatewayIDsToUpdate.add(gateway.gatewayId);
 
-                this.prisma.ttnMapperDatapoint.upsert({
+                await this.prisma.ttnMapperDatapoint.upsert({
                     where: { id: eachTTNMapperAPIDatapoint.database_id },
                     update: {},
                     create: {
