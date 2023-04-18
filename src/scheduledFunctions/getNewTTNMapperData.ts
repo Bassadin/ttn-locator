@@ -12,8 +12,7 @@ export default class GetNewTTNMapperDataCronJob {
     public static initScheduledJob(): void {
         // https://crontab.guru/#0_*/2_*_*_* (Every 2 hours)
         const ttnmapperJob = new CronJob('0 */2 * * *', () => {
-            // TTNMapperConnection.getNewTTNMapperDataForDevice();
-            console.log("I'm executed every minute!");
+            this.getNewTTNMapperDataForSubscribedDevices();
         });
 
         ttnmapperJob.start();
