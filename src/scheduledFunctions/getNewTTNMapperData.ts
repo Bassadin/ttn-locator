@@ -25,7 +25,9 @@ export default class GetNewTTNMapperDataCronJob {
         const gatewayIDsToUpdate: Set<string> = new Set();
 
         for (const eachDeviceSubscription of subscribedDevices) {
-            const ttnMapperApiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(eachDeviceSubscription.deviceId);
+            const ttnMapperApiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(
+                eachDeviceSubscription.deviceId,
+            );
             for (const eachTTNMapperAPIDatapoint of ttnMapperApiResponse.body) {
                 logger.debug(
                     `=> Inserting new TTNMapper data ${eachTTNMapperAPIDatapoint.database_id} for Device ${eachDeviceSubscription.deviceId}`,
