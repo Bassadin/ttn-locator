@@ -19,6 +19,7 @@ import GetNewTTNMapperDataCronJob from './scheduledFunctions/getNewTTNMapperData
 // Fastify instance
 const app: Application = express();
 
+/* istanbul ignore next  */
 const pinoHttpLogger = pinoHttp({
     logger: logger,
     autoLogging: {
@@ -26,6 +27,7 @@ const pinoHttpLogger = pinoHttp({
     },
 });
 
+/* istanbul ignore next  */
 if (process.env.NODE_ENV != 'testing') {
     app.use(pinoHttpLogger);
 }
