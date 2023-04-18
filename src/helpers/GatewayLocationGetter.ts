@@ -1,9 +1,9 @@
-import GatewayLocation from '@/dataclasses/GatewayLocation';
+import Location from '@/dataclasses/Location';
 import logger from '@/middleware/logger';
 import superagent from 'superagent';
 
 export default class GatewayLocationGetter {
-    public static async getGatewayLocation(gatewayId: string): Promise<GatewayLocation> {
+    public static async getGatewayLocation(gatewayId: string): Promise<Location> {
         logger.debug(`Fetching location for gateway ${gatewayId}`);
 
         const responseData = await superagent.get(
@@ -12,7 +12,7 @@ export default class GatewayLocationGetter {
 
         const reponseGatewayLocation = responseData.body.location;
 
-        return new GatewayLocation(
+        return new Location(
             reponseGatewayLocation.latitude,
             reponseGatewayLocation.longitude,
             reponseGatewayLocation.altitude,

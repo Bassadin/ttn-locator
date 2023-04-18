@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
 import logger from '@/middleware/logger';
 import GatewayLocationGetter from '@/helpers/GatewayLocationGetter';
-import GatewayLocation from '@/dataclasses/GatewayLocation';
+import Location from '@/dataclasses/Location';
 
 export default class GetNewTTNMapperDataCronJob {
     private static prisma = new PrismaClient();
@@ -90,7 +90,7 @@ export default class GetNewTTNMapperDataCronJob {
 
     public static async updateGatewayLocation(gatewayID: string): Promise<void> {
         GatewayLocationGetter.getGatewayLocation(gatewayID)
-            .then(async (gatewayLocation: GatewayLocation) => {
+            .then(async (gatewayLocation: Location) => {
                 // TODO: Why is the await needed here?
                 await this.prisma.gateway.update({
                     where: { gatewayId: gatewayID },
