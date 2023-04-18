@@ -7,6 +7,7 @@ import BaseRoutes from '@/routes/base';
 import TTNMapperDatapointsRoutes from '@/routes/ttnmapper_datapoints';
 import DeviceSubscriptionsRoutes from '@/routes/device_subscriptions';
 import DevicesRoutes from '@/routes/devices';
+import { GPS_DATAPOINTS_ROUTE_NAME, deviceGpsDatapointsRoutes } from '@/routes/device_gps_datapoints';
 
 // Error handler
 import prismaErrorHandler from '@/middleware/prismaErrorHandler';
@@ -35,6 +36,7 @@ app.use('/', BaseRoutes);
 app.use('/device_subscriptions', DeviceSubscriptionsRoutes);
 app.use('/ttnmapper_datapoints', TTNMapperDatapointsRoutes);
 app.use('/devices', DevicesRoutes);
+app.use(`/${GPS_DATAPOINTS_ROUTE_NAME}`, deviceGpsDatapointsRoutes);
 
 // Error handler
 app.use(prismaErrorHandler);
