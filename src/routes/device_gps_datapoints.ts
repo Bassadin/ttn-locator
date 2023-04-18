@@ -22,7 +22,7 @@ router.get('/:id/ttnmapper_datapoints', async (request: Request, response: Respo
                 id: Number(request.params.id),
             },
         })
-        .ttnMapperDatapoint();
+        .ttnMapperDatapoints();
     response.send({
         data: ttnMapperDatapoints,
     });
