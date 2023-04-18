@@ -1,7 +1,11 @@
 {
     "name": "ttnmapper-reader",
+    "author": {
+        "name": "Bastian Hodapp",
+        "email": "bastianhodapp@gmail.com"
+    },
     "version": "1.0.0",
-    "license": "MIT",
+    "license": "AGPL v3",
     "scripts": {
         "start": "node -r dotenv/config dist/src/server.js",
         "dev": "nodemon | pino-pretty --colorize",
