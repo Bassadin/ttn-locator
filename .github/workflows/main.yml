@@ -29,9 +29,8 @@ jobs:
               with:
                   version: 7
 
-            - uses: isbang/compose-action@v1.4.1
-              with:
-                  compose-file: './docker-compose.ci.yml'
+            - name: Start docker compose services
+              run: docker compose -f ./docker-compose.ci.yml up -d
 
             - name: pnpm install
               run: pnpm install --frozen-lockfile
