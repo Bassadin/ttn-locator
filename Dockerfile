@@ -21,6 +21,8 @@ RUN pnpm prisma:generate
 
 RUN pnpm build
 
+ENV NODE_ENV=production
+
 EXPOSE ${PORT}
 
 # Health check
