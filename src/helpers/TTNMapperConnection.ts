@@ -25,4 +25,38 @@ export default class TTNMapperConnection {
 
         return apiResponse;
     }
+
+    public static async getTtnMapperApiStartSearchDateForDevice(deviceID: string): Promise<Date> {
+        if (!deviceID) {
+            throw new Error('deviceID must be defined');
+        }
+
+        // Use 30 days as fallback
+        const fallbackDate = new Date(Date.now() - 30 * (24 * 60 * 60 * 1000));
+
+        const latestDeviceGPSDatapoint = await this.prisma.deviceGPSDatapoint.findFirst({
+            where: {
+                device: {
+                    deviceId: deviceID,
+                },
+            },
+            orderBy: {
+                timestamp: 'desc',
+            },
+            select: {
+                timestamp: true,
+            },
+        });
+
+        if (!latestDeviceGPSDatapoint) {
+            logger.info(`No TTNMapper data found for Device ${deviceID}, using fallback start date ${fallbackDate}`);
+            return fallbackDate;
+        }
+
+        logger.info(
+            `Found latest TTNMapper data for Device ${deviceID}, using latest timestamp ${latestDeviceGPSDatapoint.timestamp} as start date for TTNMapper API call`,
+        );
+
+        return new Date(latestDeviceGPSDatapoint.timestamp.getTime());
+    }
 }
