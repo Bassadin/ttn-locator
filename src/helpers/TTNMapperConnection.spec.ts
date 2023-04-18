@@ -27,7 +27,7 @@ describe('Test TTNMapperConnection class', () => {
             data: { ...dataForExampleGPSDatapoint, device: { connect: { deviceId: exampleDevice.deviceId } } },
         });
 
-        expect(async () => {
+        await expect(async () => {
             await prisma.deviceGPSDatapoint.create({
                 data: { ...dataForExampleGPSDatapoint, device: { connect: { deviceId: exampleDevice.deviceId } } },
             });
