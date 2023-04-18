@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import pinoHttp from 'pino-http';
+import logger from '@/middleware/logger';
 
 // Routes
 import BaseRoutes from '@/routes/base';
@@ -17,7 +18,12 @@ import GetNewTTNMapperDataCronJob from './scheduledFunctions/getNewTTNMapperData
 // Fastify instance
 const app: Application = express();
 
-const pinoHttpLogger = pinoHttp();
+const pinoHttpLogger = pinoHttp({
+    logger: logger,
+    autoLogging: {
+        ignore: (req) => ['/healthcheck', '/metrics'].includes(<string>req.url),
+    },
+});
 
 app.use(pinoHttpLogger);
 

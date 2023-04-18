@@ -13,4 +13,11 @@ router.get('/', async (request: Request, response: Response) => {
     });
 });
 
+// 🏚️ Healthcheck Route
+router.get('/healthcheck', async (request: Request, response: Response) => {
+    response.send({
+        message: 'OK',
+    });
+});
+
 export default router;
