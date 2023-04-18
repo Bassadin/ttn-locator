@@ -1,10 +1,13 @@
 import logger from '@/middleware/logger';
 import superagent from 'superagent';
+import { PrismaClient } from '@prisma/client';
 
 export default class TTNMapperConnection {
+    private static prisma = new PrismaClient();
+
     public static async getNewTTNMapperDataForDevice(
         deviceID: string,
-        startDateAndTime: Date = new Date(Date.now() - 7 * (24 * 60 * 60 * 1000)),
+        startDateAndTime: Date,
     ): Promise<superagent.Response> {
         if (startDateAndTime > new Date()) {
             throw new Error('startDateAndTime must be in the past');

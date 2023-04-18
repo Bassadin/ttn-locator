@@ -38,7 +38,7 @@ describe('Test TTNMapperConnection class', () => {
 
     test('Calling getNewTTNMapperDataForDevice() method without device id', async () => {
         expect(async () => {
-            await TTNMapperConnection.getNewTTNMapperDataForDevice('');
+            await TTNMapperConnection.getNewTTNMapperDataForDevice('', new Date(2005, 1, 1));
         }).rejects.toThrowError();
     });
 

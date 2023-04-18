@@ -27,6 +27,7 @@ export default class GetNewTTNMapperDataCronJob {
         for (const eachDeviceSubscription of subscribedDevices) {
             const ttnMapperApiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(
                 eachDeviceSubscription.deviceId,
+                await TTNMapperConnection.getTtnMapperApiStartSearchDateForDevice(eachDeviceSubscription.deviceId),
             );
             for (const eachTTNMapperAPIDatapoint of ttnMapperApiResponse.body) {
                 logger.debug(
