@@ -1,4 +1,3 @@
-import { DeviceGPSDatapoint } from '@prisma/client';
 import express, { Application } from 'express';
 import pinoHttp from 'pino-http';
 import logger from '@/middleware/logger';
