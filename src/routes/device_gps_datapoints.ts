@@ -14,6 +14,20 @@ router.get('/', async (request: Request, response: Response) => {
     });
 });
 
+// Get all ttnmapper datapoints for a device GPS datapoint
+router.get('/:id/ttnmapper_datapoints', async (request: Request, response: Response) => {
+    const ttnMapperDatapoints = await prisma.deviceGPSDatapoint
+        .findUnique({
+            where: {
+                id: Number(request.params.id),
+            },
+        })
+        .ttnMapperDatapoint();
+    response.send({
+        data: ttnMapperDatapoints,
+    });
+});
+
 // Get device GPS datapoint with 3 ttnmapper datapoints or more
 router.get('/with_3_or_more_ttnmapper_datapoints', async (request: Request, response: Response) => {
     // TODO
