@@ -5,7 +5,5 @@ services:
         extends:
             file: ./docker-compose.base.yml
             service: db
-        environment:
-            - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/ttnmapper-reader
 volumes:
     postgres-data:

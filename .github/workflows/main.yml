@@ -18,6 +18,8 @@ jobs:
               uses: frenck/action-yamllint@v1.4.0
     prisma-migrate-and-jest:
         runs-on: ubuntu-latest
+        env:
+            DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ttnmapper-reader
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3
