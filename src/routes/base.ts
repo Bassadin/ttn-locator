@@ -5,6 +5,7 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 // 🏚️ Default Route
+
 // This is the Default Route of the API
 router.get('/', async (request: Request, response: Response) => {
     const numberOfDeviceSubscriptions = await prisma.deviceSubscription.count();
