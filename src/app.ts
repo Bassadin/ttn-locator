@@ -40,6 +40,8 @@ if (process.env.NODE_ENV != 'TEST') {
     GetNewTTNMapperDataCronJob.initScheduledJob();
 }
 
-GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
+if (process.env.NODE_ENV == 'development') {
+    GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
+}
 
 export default app;
