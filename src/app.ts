@@ -26,7 +26,9 @@ const pinoHttpLogger = pinoHttp({
     },
 });
 
-app.use(pinoHttpLogger);
+if (process.env.NODE_ENV != 'testing') {
+    app.use(pinoHttpLogger);
+}
 
 // Body parser
 app.use(express.json());
