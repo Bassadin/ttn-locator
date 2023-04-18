@@ -11,4 +11,9 @@ describe('Test base routes', () => {
         const res = await request(app).get('/non-existing-route-aaaaaaaaaaa');
         expect(res.statusCode).toEqual(404);
     });
+
+    test('Healthcheck route', async () => {
+        const res = await request(app).get('/healthcheck');
+        expect(res.statusCode).toEqual(200);
+    });
 });
