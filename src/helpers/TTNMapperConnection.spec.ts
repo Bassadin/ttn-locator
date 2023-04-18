@@ -36,15 +36,15 @@ describe('Test TTNMapperConnection class', () => {
         await prisma.deviceGPSDatapoint.deleteMany({ where: dataForExampleGPSDatapoint });
     });
 
-    test('Calling getNewTTNMapperDataForDevice() method with negative amount of days', async () => {
+    test('Calling getNewTTNMapperDataForDevice() method without device id', async () => {
         expect(async () => {
-            await TTNMapperConnection.getNewTTNMapperDataForDevice('test', -1);
+            await TTNMapperConnection.getNewTTNMapperDataForDevice('');
         }).rejects.toThrowError();
     });
 
-    test('Calling getNewTTNMapperDataForDevice() method without device id', async () => {
+    test('Calling getNewTTNMapperDataForDevice() method with a date in the future', async () => {
         expect(async () => {
-            await TTNMapperConnection.getNewTTNMapperDataForDevice('', 1);
+            await TTNMapperConnection.getNewTTNMapperDataForDevice('test_device', new Date(3000, 1, 1));
         }).rejects.toThrowError();
     });
 });
