@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import logger from '@/middleware/logger';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -8,24 +9,24 @@ const prisma = new PrismaClient();
 
 // Get all device GPS datapoints
 router.get('/', async (request: Request, response: Response) => {
-    const minTTNMapperDatapoints = request.query.min_ttnmapper_datapoints;
+    const minTTNMapperDatapoints: number = parseInt(<string>request.query.min_ttnmapper_datapoints) || 0;
+    const maxHDOP: number = parseFloat(<string>request.query.max_hdop) || 10;
 
-    let deviceGPSDatapoints;
+    logger.info(
+        `Getting all device GPS datapoints with at least ${minTTNMapperDatapoints} TTNMapper datapoints and HDOP <= ${maxHDOP}`,
+    );
 
-    if (minTTNMapperDatapoints) {
-        // TODO use prisma client instead of raw query as soon as possible
-        deviceGPSDatapoints = await prisma.$queryRaw`
+    // TODO use prisma client instead of raw query as soon as possible
+    const deviceGPSDatapoints = await prisma.$queryRaw`
             SELECT *
             FROM "DeviceGPSDatapoint"
             WHERE (
                 SELECT COUNT(*)
                 FROM "TtnMapperDatapoint"
                 WHERE "DeviceGPSDatapoint".id = "TtnMapperDatapoint"."deviceGPSDatapointId"
-            ) >= 3
+            ) >= ${minTTNMapperDatapoints}
+                AND "DeviceGPSDatapoint".hdop <= ${maxHDOP};
         `;
-    } else {
-        deviceGPSDatapoints = await prisma.deviceGPSDatapoint.findMany();
-    }
 
     response.send({
         data: deviceGPSDatapoints,
