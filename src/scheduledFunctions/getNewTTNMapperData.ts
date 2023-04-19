@@ -16,6 +16,7 @@ export default class GetNewTTNMapperDataCronJob {
         });
 
         ttnmapperJob.start();
+        logger.info('Scheduled job for fetching data from TTN Mapper initialized');
     }
 
     public static async getNewTTNMapperDataForSubscribedDevices() {
@@ -98,7 +99,7 @@ export default class GetNewTTNMapperDataCronJob {
     }
 
     public static async updateGatewayLocation(gatewayID: string): Promise<void> {
-        GatewayLocationGetter.getGatewayLocation(gatewayID)
+        GatewayLocationGetter.getGatewayLocationFromPacketBrokerAPI(gatewayID)
             .then(async (gatewayLocation: Location) => {
                 // TODO: Why is the await needed here?
                 await this.prisma.gateway.update({

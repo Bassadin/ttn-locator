@@ -3,7 +3,7 @@ import logger from '@/middleware/logger';
 import superagent from 'superagent';
 
 export default class GatewayLocationGetter {
-    public static async getGatewayLocation(gatewayId: string): Promise<Location> {
+    public static async getGatewayLocationFromPacketBrokerAPI(gatewayId: string): Promise<Location> {
         logger.debug(`Fetching location for gateway ${gatewayId}`);
 
         const responseData = await superagent.get(
