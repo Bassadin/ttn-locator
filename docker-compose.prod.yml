@@ -3,15 +3,15 @@ version: "3"
 services:
     ttnmapper-reader:
         extends:
-            file: docker-compose.yml
+            file: docker-compose.base.yml
             service: ttnmapper-reader
     db:
         extends:
-            file: docker-compose.yml
+            file: docker-compose.base.yml
             service: db
     pgadmin:
         extends:
-            file: docker-compose.yml
+            file: docker-compose.base.yml
             service: pgadmin
 
 volumes:
