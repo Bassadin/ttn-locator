@@ -20,6 +20,12 @@ export default class GetNewTTNMapperDataCronJob {
 
     public static async getNewTTNMapperDataForSubscribedDevices() {
         const subscribedDevices = await this.prisma.deviceSubscription.findMany();
+
+        if (subscribedDevices.length === 0) {
+            logger.warn('No device subscriptions found, skipping TTN Mapper API fetch');
+            return;
+        }
+
         logger.info(`=> Fetching data from TTN Mapper API for ${subscribedDevices.length} subscribed devices`);
 
         const gatewayIDsToUpdate: Set<string> = new Set();
