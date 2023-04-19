@@ -13,14 +13,16 @@ router.get('/', async (request: Request, response: Response) => {
 });
 
 // Get Device GPS Datapoints associated with a specific Gateway
-router.get('/:id/device_gps_datapoints', async (request: Request, response: Response) => {
+router.get('/:id/gps_datapoints_with_rssi', async (request: Request, response: Response) => {
     const result = await prisma.gateway.findUnique({
         where: {
             gatewayId: request.params.id,
         },
         select: {
             ttnmapperDatapoints: {
-                include: {
+                select: {
+                    rssi: true,
+                    snr: true,
                     deviceGPSDatapoint: true,
                 },
             },
@@ -33,9 +35,11 @@ router.get('/:id/device_gps_datapoints', async (request: Request, response: Resp
     }
 
     // Get the deviceGPSDatapoint
-    const deviceGPSDatapoints = result.ttnmapperDatapoints.map(
-        (ttnmapperDatapoint) => ttnmapperDatapoint.deviceGPSDatapoint,
-    );
+    const deviceGPSDatapoints = result.ttnmapperDatapoints.map((ttnmapperDatapoint) => ({
+        ...ttnmapperDatapoint.deviceGPSDatapoint,
+        rssi: ttnmapperDatapoint.rssi,
+        snr: ttnmapperDatapoint.snr,
+    }));
 
     response.send({ message: 'success', data: deviceGPSDatapoints });
 });

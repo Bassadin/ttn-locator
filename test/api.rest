@@ -50,3 +50,15 @@ GET http://localhost:{{$dotenv PORT}}/device_gps_datapoints?min_ttnmapper_datapo
 // Get all device gps datapoints with 3 or more ttnmapper datapoints and a max hdop of 2
 
 GET http://localhost:{{$dotenv PORT}}/device_gps_datapoints?min_ttnmapper_datapoints=3&max_hdop=2
+
+
+### Gateways
+
+// Get all gateways
+GET http://localhost:{{$dotenv PORT}}/gateways
+
+###
+
+// Get GPS Datapoints for specific gateway
+
+GET http://localhost:{{$dotenv PORT}}/gateways/eui-ac1f09fffe06048e/gps_datapoints_with_rssi
