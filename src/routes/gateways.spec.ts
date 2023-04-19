@@ -9,7 +9,7 @@ describe('Test device_gps_datapoints routes', () => {
     });
 
     test('Get device_gps_datapoints for specific gateway', async () => {
-        const response = await request(app).get('/gateways/mikrotik-lr8-001/device_gps_datapoints');
+        const response = await request(app).get('/gateways/testing-gateway-prisma-001/device_gps_datapoints');
         expect(response.statusCode).toBe(200);
         expect(response.body.data.length).toBeGreaterThan(0);
     });

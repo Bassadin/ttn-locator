@@ -10,10 +10,10 @@ async function main() {
         },
     });
     const exampleGateway = await prisma.gateway.upsert({
-        where: { gatewayId: 'mikrotik-lr8-001' },
+        where: { gatewayId: 'testing-gateway-prisma-001' },
         update: {},
         create: {
-            gatewayId: 'mikrotik-lr8-001',
+            gatewayId: 'testing-gateway-prisma-001',
             latitude: 49.0,
             longitude: 8.0,
             altitude: 42.0,
