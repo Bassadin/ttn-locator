@@ -1,5 +1,6 @@
 import prisma from '@/global/prisma';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
+import logger from '@/middleware/logger';
 import express, { Request, Response } from 'express';
 
 const router = express.Router();
@@ -14,6 +15,12 @@ router.get('/', async (request: Request, response: Response) => {
 
 // Add a new device
 router.post('/', async (request: Request, response: Response) => {
+    logger.debug('Adding new device: ' + request.body.deviceId);
+    if (!(await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper(request.body.deviceId))) {
+        response.status(400).send({ message: 'Device does not exist on TTN Mapper' });
+        return;
+    }
+
     const device = await prisma.device.upsert({
         where: { deviceId: request.body.deviceId },
         update: {
