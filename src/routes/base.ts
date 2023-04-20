@@ -8,7 +8,11 @@ const prisma = new PrismaClient();
 
 // This is the Default Route of the API
 router.get('/', async (request: Request, response: Response) => {
-    const numberOfDeviceSubscriptions = await prisma.deviceSubscription.count();
+    const numberOfDeviceSubscriptions = await prisma.device.count({
+        where: {
+            subscription: true,
+        },
+    });
     response.send({
         message: `Hello from ttnmapper-reader!\nCurrent amount of Device subscriptions: ${numberOfDeviceSubscriptions}`,
     });

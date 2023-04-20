@@ -20,7 +20,11 @@ export default class GetNewTTNMapperDataCronJob {
     }
 
     public static async getNewTTNMapperDataForSubscribedDevices() {
-        const subscribedDevices = await this.prisma.deviceSubscription.findMany();
+        const subscribedDevices = await this.prisma.device.findMany({
+            where: {
+                subscription: true,
+            },
+        });
 
         if (subscribedDevices.length === 0) {
             logger.warn('No device subscriptions found, skipping TTN Mapper API fetch');

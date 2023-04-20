@@ -36,7 +36,7 @@ model DeviceGPSDatapoint {
 model Device {
     deviceId            String               @id
     deviceGPSDatapoints DeviceGPSDatapoint[]
-    deviceSubscription  DeviceSubscription?
+    subscription        Boolean              @default(true)
     createdAt           DateTime             @default(now())
     updatedAt           DateTime             @updatedAt
 }
@@ -49,12 +49,4 @@ model Gateway {
     ttnmapperDatapoints TtnMapperDatapoint[]
     createdAt           DateTime             @default(now())
     updatedAt           DateTime             @updatedAt
-}
-
-// add a model that represents subscriptions to Device IDs
-model DeviceSubscription {
-    deviceId  String   @id @unique
-    device    Device   @relation(fields: [deviceId], references: [deviceId])
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 }

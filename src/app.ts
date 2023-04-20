@@ -5,7 +5,6 @@ import logger from '@/middleware/logger';
 // Routes
 import BaseRoutes from '@/routes/base';
 import TTNMapperDatapointsRoutes from '@/routes/ttnmapper_datapoints';
-import DeviceSubscriptionsRoutes from '@/routes/device_subscriptions';
 import DevicesRoutes from '@/routes/devices';
 import DeviceGPSDatapointsRoutes from '@/routes/device_gps_datapoints';
 import GatewaysRoutes from '@/routes/gateways';
@@ -38,7 +37,6 @@ app.use(express.json());
 
 // Register Routes
 app.use('/', BaseRoutes);
-app.use('/device_subscriptions', DeviceSubscriptionsRoutes);
 app.use('/ttnmapper_datapoints', TTNMapperDatapointsRoutes);
 app.use('/devices', DevicesRoutes);
 app.use(`/device_gps_datapoints`, DeviceGPSDatapointsRoutes);
