@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "TtnMapperDatapoint" (
     "id" INTEGER NOT NULL,
-    "timestamp" TIMESTAMP(3) NOT NULL,
+    "timestamp" TIMESTAMP(6) NOT NULL,
     "deviceGPSDatapointId" INTEGER NOT NULL,
     "gatewayId" TEXT NOT NULL,
     "rssi" INTEGER NOT NULL,

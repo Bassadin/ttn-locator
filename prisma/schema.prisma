@@ -10,7 +10,7 @@ datasource db {
 // TTN is not completely capitalized since Prisma makes the first letter lowercase when generating the model
 model TtnMapperDatapoint {
     id                   Int                @id
-    timestamp            DateTime
+    timestamp            DateTime           @db.Timestamp(6) // 6 digits of precision for the fractional seconds
     deviceGPSDatapoint   DeviceGPSDatapoint @relation(fields: [deviceGPSDatapointId], references: [id])
     deviceGPSDatapointId Int
     gateway              Gateway            @relation(fields: [gatewayId], references: [gatewayId])
