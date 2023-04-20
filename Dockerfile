@@ -29,4 +29,4 @@ EXPOSE ${PORT}
 HEALTHCHECK CMD node ./additional_scripts/healthcheck.mjs
 
 # Start the server using the production build
-CMD pnpm start
+CMD pnpm start:migrate:prod
