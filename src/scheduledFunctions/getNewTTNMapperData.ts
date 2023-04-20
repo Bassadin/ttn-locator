@@ -73,18 +73,24 @@ export default class GetNewTTNMapperDataCronJob {
 
                 gatewayIDsToUpdate.add(gateway.gatewayId);
 
-                await this.prisma.ttnMapperDatapoint.upsert({
-                    where: { id: eachTTNMapperAPIDatapoint.database_id },
-                    update: {},
-                    create: {
-                        id: eachTTNMapperAPIDatapoint.database_id,
-                        rssi: eachTTNMapperAPIDatapoint.rssi,
-                        snr: eachTTNMapperAPIDatapoint.snr,
-                        timestamp: eachTTNMapperAPIDatapoint.time,
-                        deviceGPSDatapoint: { connect: { id: deviceGPSDatapoint.id } },
-                        gateway: { connect: { gatewayId: gateway.gatewayId } },
-                    },
-                });
+                if (new Date(eachTTNMapperAPIDatapoint.gateway_time) > new Date(1900, 1, 1)) {
+                    await this.prisma.ttnMapperDatapoint.upsert({
+                        where: { id: eachTTNMapperAPIDatapoint.database_id },
+                        update: {},
+                        create: {
+                            id: eachTTNMapperAPIDatapoint.database_id,
+                            rssi: eachTTNMapperAPIDatapoint.rssi,
+                            snr: eachTTNMapperAPIDatapoint.snr,
+                            timestamp: eachTTNMapperAPIDatapoint.gateway_time,
+                            deviceGPSDatapoint: { connect: { id: deviceGPSDatapoint.id } },
+                            gateway: { connect: { gatewayId: gateway.gatewayId } },
+                        },
+                    });
+                } else {
+                    logger.warn(
+                        `Gateway time is invalid for TTN Mapper datapoint ${eachTTNMapperAPIDatapoint.database_id}, skipping...`,
+                    );
+                }
             }
         }
 
