@@ -1,6 +1,8 @@
 {
 	"recommendations": [
 		"humao.rest-client",
-        "Prisma.prisma"
+		"prisma.prisma",
+		"orta.vscode-jest",
+		"rvest.vs-code-prettier-eslint"
 	]
 }
