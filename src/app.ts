@@ -55,7 +55,7 @@ if (process.env.NODE_ENV != 'testing') {
 }
 
 /* istanbul ignore next  */
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'production') {
     GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
 }
 
