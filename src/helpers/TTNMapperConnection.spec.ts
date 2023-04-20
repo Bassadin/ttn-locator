@@ -61,25 +61,22 @@ describe('Test TTNMapperConnection class', () => {
             }).rejects.toThrowError();
         });
     });
-    test('Calling getNewTTNMapperDataForDevice() method without device id', async () => {
-        expect(async () => {
-            await TTNMapperConnection.getNewTTNMapperDataForDevice('', new Date(2005, 1, 1));
-        }).rejects.toThrowError();
-    });
 
-    test('Calling getNewTTNMapperDataForDevice() method with a date in the future', async () => {
-        expect(async () => {
-            await TTNMapperConnection.getNewTTNMapperDataForDevice('test_device', new Date(3000, 1, 1));
-        }).rejects.toThrowError();
-    });
+    describe('checkIfDeviceExistsOnTtnMapper()', () => {
+        test('Calling checkIfDeviceExistsOnTtnMapper() method with a valid device id', async () => {
+            expect(await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper('loris-hfu-001')).toBe(true);
+        });
 
-    test('Calling getTtnMapperApiStartSearchDateForDevice() method with a valid device id', async () => {
-        expect(await TTNMapperConnection.getTtnMapperApiStartSearchDateForDevice('loris-hfu-001')).toBeInstanceOf(Date);
-    });
+        test('Calling checkIfDeviceExistsOnTtnMapper() method with an invalid device id', async () => {
+            expect(await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper('invalid_device_id_xxxxxxxxxx')).toBe(
+                false,
+            );
+        });
 
-    test('Calling getTtnMapperApiStartSearchDateForDevice() method with an empty device id', async () => {
-        expect(async () => {
-            await TTNMapperConnection.getTtnMapperApiStartSearchDateForDevice('');
-        }).rejects.toThrowError();
+        test('Calling checkIfDeviceExistsOnTtnMapper() method with an empty device id', async () => {
+            expect(async () => {
+                await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper('');
+            }).rejects.toThrowError();
+        });
     });
 });
