@@ -7,6 +7,7 @@ async function main() {
         update: {},
         create: {
             deviceId: 'loris-hfu-001',
+            subscription: true,
         },
     });
     const exampleGateway = await prisma.gateway.upsert({
