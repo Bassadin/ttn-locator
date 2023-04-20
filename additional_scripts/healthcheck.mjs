@@ -7,7 +7,7 @@ const options = {
     timeout: 1200,
 };
 
-console.log(`Checking healthcheck on ${options.host}:${options.port}/${options.path}...`);
+console.log(`Checking healthcheck on ${options.host}:${options.port}${options.path}...`);
 
 const request = http.request(options, (res) => {
     console.log(`STATUS: ${res.statusCode}`);
