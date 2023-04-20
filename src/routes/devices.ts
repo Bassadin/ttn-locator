@@ -1,9 +1,8 @@
+import prisma from '@/global/prisma';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
-import { PrismaClient } from '@prisma/client';
 import express, { Request, Response } from 'express';
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 // 🖁 Devices
 

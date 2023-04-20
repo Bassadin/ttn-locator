@@ -1,18 +1,13 @@
 import express, { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import GetterFunctions from '@/helpers/GetterFunctions';
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 // 🏚️ Default Route
 
 // This is the Default Route of the API
 router.get('/', async (request: Request, response: Response) => {
-    const numberOfDeviceSubscriptions = await prisma.device.count({
-        where: {
-            subscription: true,
-        },
-    });
+    const numberOfDeviceSubscriptions = await GetterFunctions.getAmountOfDeviceSubscriptions();
     response.send({
         message: `Hello from ttnmapper-reader!\nCurrent amount of Device subscriptions: ${numberOfDeviceSubscriptions}`,
     });

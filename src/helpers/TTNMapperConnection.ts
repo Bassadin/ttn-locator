@@ -1,10 +1,8 @@
+import prisma from '@/global/prisma';
 import logger from '@/middleware/logger';
 import superagent from 'superagent';
-import { PrismaClient } from '@prisma/client';
 
 export default class TTNMapperConnection {
-    private static prisma = new PrismaClient();
-
     public static async getNewTTNMapperDataForDevice(
         deviceID: string,
         startDateAndTime: Date,
@@ -37,7 +35,7 @@ export default class TTNMapperConnection {
         // Use 30 days as fallback
         const fallbackDate = new Date(Date.now() - 30 * (24 * 60 * 60 * 1000));
 
-        const latestDeviceGPSDatapoint = await this.prisma.deviceGPSDatapoint.findFirst({
+        const latestDeviceGPSDatapoint = await prisma.deviceGPSDatapoint.findFirst({
             where: {
                 device: {
                     deviceId: deviceID,

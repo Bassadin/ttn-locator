@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/global/prisma';
 import express, { Request, Response } from 'express';
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 // 🗺️ TTNMapper datapoints
 

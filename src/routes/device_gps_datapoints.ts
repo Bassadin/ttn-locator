@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
 import logger from '@/middleware/logger';
+import prisma from '@/global/prisma';
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 // 📍 Device GPS datapoints
 

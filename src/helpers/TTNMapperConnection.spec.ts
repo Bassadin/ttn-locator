@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/global/prisma';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
-
-const prisma = new PrismaClient();
 
 describe('Test TTNMapperConnection class', () => {
     test('Test inserting duplicate datapoint', async () => {
