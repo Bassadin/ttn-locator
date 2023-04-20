@@ -19,4 +19,14 @@ describe('Test devices routes', () => {
         const res = await request(app).get('/devices/ttnmapper_api/loris-tracker-hfu');
         expect(res.statusCode).toEqual(200);
     });
+
+    test('Adding device', async () => {
+        const res = await request(app).post('/devices/').send({
+            deviceId: 'test-device-002',
+            subscription: false,
+        });
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.data).toHaveProperty('deviceId', 'test-device-002');
+        expect(res.body.data).toHaveProperty('subscription', false);
+    });
 });
