@@ -19,6 +19,9 @@ import GetNewTTNMapperDataCronJob from './scheduledFunctions/getNewTTNMapperData
 // Fastify instance
 const app: Application = express();
 
+// CORS
+import cors from 'cors';
+
 /* istanbul ignore next  */
 const pinoHttpLogger = pinoHttp({
     logger: logger,
@@ -34,6 +37,9 @@ if (process.env.NODE_ENV != 'testing') {
 
 // Body parser
 app.use(express.json());
+
+// CORS
+app.use(cors());
 
 // Register Routes
 app.use('/', BaseRoutes);
