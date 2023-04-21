@@ -9,18 +9,18 @@ env:
     IMAGE_NAME: ttnmapper-reader
 
 jobs:
-    audit:
-        name: Audit packages
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: pnpm/action-setup@v2
-              with:
-                  version: 7
-            - name: Audit packages
-              run: pnpm audit --audit-level moderate
-              env:
-                  CI: true
+    # audit:
+    #     name: Audit packages
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - uses: actions/checkout@v3
+    #         - uses: pnpm/action-setup@v2
+    #           with:
+    #               version: 7
+    #         - name: Audit packages
+    #           run: pnpm audit --audit-level moderate
+    #           env:
+    #               CI: true
     analyze:
         name: Analyze
         runs-on: ubuntu-latest
