@@ -27,7 +27,7 @@ services:
             - postgres-data:/var/lib/postgresql/data
     pgadmin:
         container_name: pgadmin4_container
-        depends_on:
+        links:
             - db
         image: dpage/pgadmin4:7
         restart: always
@@ -41,6 +41,15 @@ services:
             - pgadmin-data:/var/lib/pgadmin
             - ./pgadmin_server_config/servers.json:/pgadmin4/servers.json
             - ./pgadmin_server_config/pgpass:/pgpass:rw
+    ttn-locator-frontend:
+        image: ghcr.io/bassadin/ttn-locator-frontend:latest
+        restart: unless-stopped
+        links:
+            - ttnmapper-reader
+        ports:
+            - '8080:80'
+        environment:
+            - VITE_TTNMAPPER_LOCATOR_API_URL=http://ttnmapper-reader:3000
 volumes:
     postgres-data:
     pgadmin-data:

@@ -13,6 +13,12 @@ services:
         extends:
             file: docker-compose.base.yml
             service: pgadmin
+    ttn-locator-frontend:
+        extends:
+            file: docker-compose.base.yml
+            service: ttn-locator-frontend
+        environment:
+            - VITE_TTNMAPPER_LOCATOR_API_URL=http://ttnmapper-reader:3000
 
 volumes:
     postgres-data:
