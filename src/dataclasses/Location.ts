@@ -2,7 +2,7 @@ export default class Location {
     constructor(public latitude: number, public longitude: number, public altitude: number) {}
 
     // https://stackoverflow.com/a/27943
-    getMeterDistanceTo(other: Location): number {
+    getMeterDistanceWithoutAltitudeTo(other: Location): number {
         const earthRadius = 6371e3; // Earth's radius in meters
         const lat1 = this.latitude * (Math.PI / 180);
         const lat2 = other.latitude * (Math.PI / 180);
