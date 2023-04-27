@@ -1,10 +1,10 @@
 ---
 version: "3"
 services:
-    ttnmapper-reader:
+    ttn-locator-backend:
         extends:
             file: docker-compose.base.yml
-            service: ttnmapper-reader
+            service: ttn-locator-backend
     db:
         extends:
             file: docker-compose.base.yml
@@ -18,7 +18,7 @@ services:
             file: docker-compose.base.yml
             service: ttn-locator-frontend
         environment:
-            - VITE_TTNMAPPER_LOCATOR_API_URL=http://ttnmapper-reader:3000
+            - VITE_TTNMAPPER_LOCATOR_API_URL=http://ttn-locator-backend:3000
 
 volumes:
     postgres-data:

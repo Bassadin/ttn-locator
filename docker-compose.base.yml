@@ -1,8 +1,8 @@
 ---
 version: "3"
 services:
-    ttnmapper-reader:
-        image: ghcr.io/bassadin/ttnmapper-reader:latest
+    ttn-locator-backend:
+        image: ghcr.io/bassadin/ttn-locator-backend:latest
         build: .
         restart: always
         links:
@@ -10,7 +10,7 @@ services:
         ports:
             - "${PORT}:${PORT}"
         environment:
-            - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttnmapper-reader
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttn-locator-backend
             # The healthcheck needs this to be set
             - PORT=3000
     db:
@@ -18,7 +18,7 @@ services:
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
-            - POSTGRES_DB=ttnmapper-reader
+            - POSTGRES_DB=ttn-locator-backend
         restart: always
         ports:
             # PostgreSQL Port
@@ -45,11 +45,11 @@ services:
         image: ghcr.io/bassadin/ttn-locator-frontend:latest
         restart: unless-stopped
         links:
-            - ttnmapper-reader
+            - ttn-locator-backend
         ports:
             - '8080:80'
         environment:
-            - VITE_TTNMAPPER_LOCATOR_API_URL=http://ttnmapper-reader:3000
+            - VITE_TTNMAPPER_LOCATOR_API_URL=http://ttn-locator-backend:3000
 volumes:
     postgres-data:
     pgadmin-data:

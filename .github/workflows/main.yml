@@ -46,7 +46,7 @@ jobs:
     prisma-migrate-and-jest:
         runs-on: ubuntu-latest
         env:
-            DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ttnmapper-reader
+            DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ttn-locator-backend
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3
@@ -103,7 +103,7 @@ jobs:
             - name: Upload artifact
               uses: actions/upload-artifact@v2
               with:
-                  name: ttnmapper-reader
+                  name: ttn-locator-backend
                   path: dist
     build-docker:
         runs-on: ubuntu-latest

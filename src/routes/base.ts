@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', async (request: Request, response: Response) => {
     const numberOfDeviceSubscriptions = await GetterFunctions.getAmountOfDeviceSubscriptions();
     response.send({
-        message: `Hello from ttnmapper-reader!\nCurrent amount of Device subscriptions: ${numberOfDeviceSubscriptions}`,
+        message: `Hello from ttn-locator-backend!\nCurrent amount of Device subscriptions: ${numberOfDeviceSubscriptions}`,
     });
 });
 
