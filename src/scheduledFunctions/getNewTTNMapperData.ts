@@ -99,11 +99,16 @@ export default class GetNewTTNMapperDataCronJob {
 
         logger.info(`Finished fetching data from TTN Mapper API for ${subscribedDevicesAmount} subscribed devices`);
 
-        // Update the gateway locations
         logger.info(`Updating ${gatewayIDsToUpdate.size} gateway locations`);
+
+        // update gateway locations, then wait for all promises to finish and log
+        const promises: Promise<void>[] = [];
+
         for (const eachGatewayID of gatewayIDsToUpdate) {
-            this.updateGatewayLocation(eachGatewayID);
+            promises.push(this.updateGatewayLocation(eachGatewayID));
         }
+
+        await Promise.all(promises);
         logger.info(`Finished updating ${gatewayIDsToUpdate.size} gateway locations`);
     }
 
