@@ -8,11 +8,9 @@ services:
         links:
             - db
         ports:
-            - "${PORT}:${PORT}"
+            - "3000:3000"
         environment:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttn-locator-backend
-            # The healthcheck needs this to be set
-            - PORT=3000
     db:
         image: postgres
         environment:

@@ -56,8 +56,12 @@ jobs:
               with:
                   version: 7
 
-            - name: Start docker compose services
-              run: docker compose -f ./docker-compose.yml up -d db
+            - uses: isbang/compose-action@v1.4.1
+              with:
+                  compose-file: './docker-compose.yml'
+                  down-flags: '--volumes'
+                  services: |
+                      db
 
             - name: pnpm install
               run: pnpm install --frozen-lockfile
