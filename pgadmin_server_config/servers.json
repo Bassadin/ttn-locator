@@ -4,7 +4,7 @@
             "Name": "Local postgres",
             "Group": "Servers",
             "Host": "db",
-            "Port": 5432,
+            "Port": 57010,
             "MaintenanceDB": "ttn-locator-backend",
             "Username": "postgres",
             "PassFile": "/pgpass"
