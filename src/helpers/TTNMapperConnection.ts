@@ -1,12 +1,13 @@
 import prisma from '@/global/prisma';
 import logger from '@/middleware/logger';
+import { TTNMapperGatewayAPIDeviceGPSDatapoint } from '@/types/GPSDatapoints';
 import superagent from 'superagent';
 
 export default class TTNMapperConnection {
     public static async getNewTTNMapperDataForDevice(
         deviceID: string,
         startDateAndTime: Date,
-    ): Promise<superagent.Response> {
+    ): Promise<TTNMapperGatewayAPIDeviceGPSDatapoint[]> {
         if (startDateAndTime > new Date()) {
             throw new Error('startDateAndTime must be in the past');
         }
@@ -24,7 +25,7 @@ export default class TTNMapperConnection {
 
         logger.info(`TTN Mapper api returned ${apiResponse.body.length} records for the Device ${deviceID}`);
 
-        return apiResponse;
+        return apiResponse.body;
     }
 
     public static async getTtnMapperApiStartSearchDateForDevice(deviceID: string): Promise<Date> {

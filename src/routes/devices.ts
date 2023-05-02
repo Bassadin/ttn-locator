@@ -37,8 +37,8 @@ router.post('/', async (request: Request, response: Response) => {
 // Get device info from TTN Mapper by id
 router.get('/ttnmapper_api/:id', async (request: Request, response: Response) => {
     const startDate = new Date(Date.now() - 30 * (24 * 60 * 60 * 1000));
-    const apiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(request.params.id, startDate);
-    response.send({ message: 'success', amountOfRecords: apiResponse.body.length });
+    const deviceGPSDatapoints = await TTNMapperConnection.getNewTTNMapperDataForDevice(request.params.id, startDate);
+    response.send({ message: 'success', amountOfRecords: deviceGPSDatapoints.length });
 });
 
 export default router;

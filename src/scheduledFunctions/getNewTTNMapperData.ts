@@ -39,7 +39,7 @@ export default class GetNewTTNMapperDataCronJob {
                 eachDeviceSubscription.deviceId,
                 await TTNMapperConnection.getTtnMapperApiStartSearchDateForDevice(eachDeviceSubscription.deviceId),
             );
-            for (const eachTTNMapperAPIDatapoint of ttnMapperApiResponse.body) {
+            for (const eachTTNMapperAPIDatapoint of ttnMapperApiResponse) {
                 logger.debug(
                     `=> Inserting new TTNMapper data ${eachTTNMapperAPIDatapoint.database_id} for Device ${eachDeviceSubscription.deviceId}`,
                 );
