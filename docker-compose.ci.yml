@@ -1,9 +1,0 @@
----
-version: "3"
-services:
-    db:
-        extends:
-            file: ./docker-compose.base.yml
-            service: db
-volumes:
-    postgres-data:
