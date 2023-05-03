@@ -10,7 +10,7 @@ services:
         ports:
             - "3000:3000"
         environment:
-            - DATABASE_URL=postgresql://postgres:postgres@db:57010/ttn-locator-backend
+            - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttn-locator-backend
     db:
         image: postgis/postgis:15-3.3
         environment:
