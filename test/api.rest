@@ -1,5 +1,18 @@
+### Base routes
+
 // Get base route
 GET http://localhost:{{$dotenv PORT}}/
+
+###
+
+// Health check
+GET http://localhost:{{$dotenv PORT}}/healthcheck
+
+###
+
+// Get new TTNMapper data
+
+POST http://localhost:{{$dotenv PORT}}/fetch_device_data HTTP/1.1
 
 ### TTN Mapper Datapoints
 

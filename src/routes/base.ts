@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import GetterFunctions from '@/helpers/GetterFunctions';
+import GetNewTTNMapperDataCronJob from '@/scheduledFunctions/getNewTTNMapperData';
 
 const router = express.Router();
 
@@ -18,6 +19,10 @@ router.get('/healthcheck', async (request: Request, response: Response) => {
     response.send({
         message: 'OK',
     });
+});
+
+router.post('/fetch_device_data', async (_request: Request, _response: Response) => {
+    GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
 });
 
 export default router;
