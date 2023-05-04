@@ -13,6 +13,8 @@ router.get('/', async (request: Request, response: Response) => {
 
 // Get Device GPS Datapoints associated with a specific Gateway
 router.get('/:id/gps_datapoints_with_rssi', async (request: Request, response: Response) => {
+    const hdopFilter = request.query.hdop_filter;
+
     const result = await prisma.gateway.findUnique({
         where: {
             gatewayId: request.params.id,
@@ -23,6 +25,13 @@ router.get('/:id/gps_datapoints_with_rssi', async (request: Request, response: R
                     rssi: true,
                     snr: true,
                     deviceGPSDatapoint: true,
+                },
+                where: {
+                    deviceGPSDatapoint: {
+                        hdop: {
+                            lt: hdopFilter ? Number(hdopFilter) : 1000,
+                        },
+                    },
                 },
             },
         },
