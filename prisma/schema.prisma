@@ -43,6 +43,8 @@ model Device {
 
 model Gateway {
     gatewayId           String               @id
+    name                String?
+    description         String?
     latitude            Float
     longitude           Float
     altitude            Float
