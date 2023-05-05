@@ -108,6 +108,7 @@ export default class GetNewTTNMapperDataCronJob {
             promises.push(this.updateGatewayLocation(eachGatewayID));
             // TODO: update gateway name and description
             // There is https://api.ttnmapper.org/network/NS_TTS_V3%3A%2F%2Fttn%40000013/gateways but it always gets every gateway...
+            // https://www.thethingsnetwork.org/gateway-data/gateway/hfu-lr8-001 this would work
         }
 
         await Promise.all(promises);
