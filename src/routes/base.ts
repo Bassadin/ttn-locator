@@ -16,13 +16,13 @@ router.get('/', async (request: Request, response: Response) => {
 
 // 🏚️ Healthcheck Route
 router.get('/healthcheck', async (request: Request, response: Response) => {
-    response.send({
-        message: 'OK',
-    });
+    response.send({ message: 'OK' });
 });
 
 router.post('/fetch_device_data', async (_request: Request, _response: Response) => {
-    GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
+    await GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
+
+    _response.send({ message: 'OK' });
 });
 
 export default router;
