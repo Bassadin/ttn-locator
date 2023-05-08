@@ -9,7 +9,13 @@ const router = express.Router();
 
 // Get all devices
 router.get('/', async (request: Request, response: Response) => {
-    const devices = await prisma.device.findMany();
+    const devices = await prisma.device.findMany({
+        include: {
+            _count: {
+                select: { deviceGPSDatapoints: true },
+            },
+        },
+    });
     response.send({ message: 'success', data: devices });
 });
 
