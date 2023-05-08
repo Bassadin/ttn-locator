@@ -51,4 +51,5 @@ model Gateway {
     ttnmapperDatapoints TtnMapperDatapoint[]
     createdAt           DateTime             @default(now())
     updatedAt           DateTime             @updatedAt
+    lastSeen            DateTime             @default(now())
 }

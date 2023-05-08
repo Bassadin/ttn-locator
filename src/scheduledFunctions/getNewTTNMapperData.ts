@@ -4,6 +4,8 @@ import logger from '@/middleware/logger';
 import GatewayLocationGetter from '@/helpers/GatewayLocationGetter';
 import Location from '@/dataclasses/Location';
 import prisma from '@/global/prisma';
+import { TTNAPIGatewayDataResponse } from '@/types/Gateways';
+import superagent from 'superagent';
 
 export default class GetNewTTNMapperDataCronJob {
     /* istanbul ignore next */
@@ -99,38 +101,42 @@ export default class GetNewTTNMapperDataCronJob {
 
         logger.info(`Finished fetching data from TTN Mapper API for ${subscribedDevicesAmount} subscribed devices`);
 
-        logger.info(`Updating ${gatewayIDsToUpdate.size} gateway locations`);
+        logger.info(`Updating metadata for ${gatewayIDsToUpdate.size} gateways.`);
 
         // update gateway locations, then wait for all promises to finish and log
         const promises: Promise<void>[] = [];
 
         for (const eachGatewayID of gatewayIDsToUpdate) {
-            promises.push(this.updateGatewayLocation(eachGatewayID));
+            promises.push(this.updateMetadataForGatewaWithID(eachGatewayID));
             // TODO: update gateway name and description
             // There is https://api.ttnmapper.org/network/NS_TTS_V3%3A%2F%2Fttn%40000013/gateways but it always gets every gateway...
             // https://www.thethingsnetwork.org/gateway-data/gateway/hfu-lr8-001 this would work
         }
 
         await Promise.all(promises);
-        logger.info(`Finished updating ${gatewayIDsToUpdate.size} gateway locations`);
+        logger.info(`Finished updating metadata for ${gatewayIDsToUpdate.size} gateways.`);
     }
 
-    public static async updateGatewayLocation(gatewayID: string): Promise<void> {
-        GatewayLocationGetter.getGatewayLocationFromPacketBrokerAPI(gatewayID)
-            .then(async (gatewayLocation: Location) => {
-                // TODO: Why is the await needed here?
+    public static async updateMetadataForGatewaWithID(gatewayID: string): Promise<void> {
+        superagent
+            .get(`https://www.thethingsnetwork.org/gateway-data/gateway/${gatewayID}`)
+            .then(async (response) => {
+                const gatewayData: TTNAPIGatewayDataResponse = response.body[gatewayID];
+
                 await prisma.gateway.update({
                     where: { gatewayId: gatewayID },
                     data: {
-                        latitude: gatewayLocation.latitude,
-                        longitude: gatewayLocation.longitude,
-                        altitude: gatewayLocation.altitude,
+                        name: gatewayData.name,
+                        description: gatewayData.description,
+                        latitude: gatewayData.location.latitude,
+                        longitude: gatewayData.location.longitude,
+                        altitude: gatewayData.location.altitude,
+                        lastSeen: new Date(gatewayData.last_seen),
                     },
                 });
-                logger.debug(`Updated location for gateway ${gatewayID}`);
             })
             .catch((error) => {
-                logger.debug(`Error getting location for gateway ${gatewayID}: ${error}`);
+                logger.debug(`Error getting metadata for gateway ${gatewayID}: ${error}`);
             });
     }
 }
