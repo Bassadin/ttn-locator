@@ -14,7 +14,6 @@
         "prettier:format": "prettier --write \"src/**/*.ts\"",
         "eslint:scan": "eslint",
         "eslint:fix": "eslint --fix",
-        "compose:up:dev": "docker compose -f ./docker-compose.dev.yml up -d",
         "prisma:reset": "prisma migrate reset",
         "prisma:generate": "prisma generate",
         "prisma:studio": "prisma studio",
