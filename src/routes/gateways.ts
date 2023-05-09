@@ -7,7 +7,13 @@ const router = express.Router();
 
 // Get all gateways
 router.get('/', async (request: Request, response: Response) => {
-    const gateways = await prisma.gateway.findMany();
+    const gateways = await prisma.gateway.findMany({
+        include: {
+            _count: {
+                select: { ttnmapperDatapoints: true },
+            },
+        },
+    });
     response.send({ message: 'success', data: gateways });
 });
 
