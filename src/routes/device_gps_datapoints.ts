@@ -12,6 +12,7 @@ const router = express.Router();
 router.get('/', async (request: Request, response: Response) => {
     const minTTNMapperDatapoints: number = parseInt(<string>request.query.min_ttnmapper_datapoints) || 0;
     const maxHDOP: number = parseFloat(<string>request.query.max_hdop) || 10;
+    const limit: number = Number(request.query.limit) || 1000;
 
     logger.info(
         `Getting all device GPS datapoints with at least ${minTTNMapperDatapoints} TTNMapper datapoints and HDOP <= ${maxHDOP}`,
@@ -26,7 +27,8 @@ router.get('/', async (request: Request, response: Response) => {
                 FROM "TtnMapperDatapoint"
                 WHERE "DeviceGPSDatapoint".id = "TtnMapperDatapoint"."deviceGPSDatapointId"
             ) >= ${minTTNMapperDatapoints}
-                AND "DeviceGPSDatapoint".hdop <= ${maxHDOP};
+                AND "DeviceGPSDatapoint".hdop <= ${maxHDOP}
+            LIMIT ${limit};
         `;
 
     response.send({
