@@ -34,6 +34,29 @@ router.get('/', async (request: Request, response: Response) => {
     });
 });
 
+// Get GPS datapoint by id, including all TTNMapper datapoints
+router.get('/:id', async (request: Request, response: Response) => {
+    const deviceGPSDatapoint = await prisma.deviceGPSDatapoint.findUnique({
+        where: {
+            id: Number(request.params.id),
+        },
+        include: {
+            ttnMapperDatapoints: true,
+        },
+    });
+
+    if (!deviceGPSDatapoint) {
+        response.status(404).send({
+            error: 'Device GPS datapoint not found',
+        });
+        return;
+    }
+
+    response.send({
+        data: deviceGPSDatapoint,
+    });
+});
+
 // Get all ttnmapper datapoints for a device GPS datapoint
 router.get('/:id/ttnmapper_datapoints_with_gateway_locations', async (request: Request, response: Response) => {
     const deviceGPSDatapoints = await prisma.deviceGPSDatapoint.findUnique({
