@@ -13,3 +13,9 @@ export interface TTNMapperGatewayAPIDeviceGPSDatapoint {
     time: Date;
     gateway_time: Date;
 }
+
+export interface RssiSimilarityFilter {
+    gatewayId: string;
+    minRssi: number;
+    maxRssi: number;
+}
