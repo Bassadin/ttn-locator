@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import logger from '@/middleware/logger';
 import prisma from '@/global/prisma';
 import { RssiSimilarityFilter } from '@/types/GPSDatapoints';
+import DeviceGPSDatapointsHelper from '@/helpers/DeviceGPSDatapointsHelper';
 
 const router = express.Router();
 
@@ -73,40 +74,20 @@ router.get('/:id/ttnmapper_datapoints_with_gateway_locations', async (request: R
 
 // Get all gps datapoints for a specific set of gateways and rssi ranges
 router.post('/rssi_similarity', async (request: Request, response: Response) => {
-    const similarityData: RssiSimilarityFilter[] = request.body.similarityFilter;
+    const similarityFilter: RssiSimilarityFilter[] = request.body.similarityFilter;
 
-    if (!similarityData || similarityData.length === 0) {
+    if (!similarityFilter || similarityFilter.length === 0) {
         response.status(400).send({ error: 'No similarity filter provided' });
         return;
     }
 
     logger.info(
-        `Getting all device GPS datapoints that match the similarity filter: ${JSON.stringify(similarityData)}`,
+        `Getting all device GPS datapoints that match the similarity filter: ${JSON.stringify(similarityFilter)}`,
     );
 
-    // TODO: Not sure how to do this without any
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const prismaFilterQuery: any = {
-        AND: [],
-    };
-
-    for (const filterCriteria of similarityData) {
-        prismaFilterQuery.AND.push({
-            ttnMapperDatapoints: {
-                some: {
-                    gateway: {
-                        gatewayId: filterCriteria.gatewayId,
-                    },
-                    rssi: {
-                        gte: filterCriteria.minRssi,
-                        lte: filterCriteria.maxRssi,
-                    },
-                },
-            },
-        });
-    }
-
-    const filteredDeviceGPSDatapoints = await prisma.deviceGPSDatapoint.findMany({ where: prismaFilterQuery });
+    const filteredDeviceGPSDatapoints = await DeviceGPSDatapointsHelper.getMatchingDeviceGPSDatapointsFromFilter(
+        similarityFilter,
+    );
 
     response.send({
         message: `Found ${filteredDeviceGPSDatapoints.length} device GPS datapoints that match the similarity filter`,
