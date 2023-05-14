@@ -7,6 +7,16 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+generator erd_md {
+    provider = "prisma-erd-generator"
+    output   = "./db_erd.md"
+}
+
+generator erd_svg {
+    provider = "prisma-erd-generator"
+    output   = "./db_erd.svg"
+}
+
 // TTN is not completely capitalized since Prisma makes the first letter lowercase when generating the model
 model TtnMapperDatapoint {
     id                   Int                @id

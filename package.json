@@ -15,7 +15,7 @@
         "eslint:scan": "eslint",
         "eslint:fix": "eslint --fix",
         "prisma:reset": "prisma migrate reset",
-        "prisma:generate": "prisma generate",
+        "prisma:generate": "npx prisma generate",
         "prisma:studio": "prisma studio",
         "prisma:migrate:prod": "prisma migrate deploy",
         "prettier:scan": "prettier --check .",
@@ -26,6 +26,7 @@
         "prepare": "husky install"
     },
     "devDependencies": {
+        "@mermaid-js/mermaid-cli": "^10.1.0",
         "@types/cors": "^2.8.13",
         "@types/cron": "^2.0.1",
         "@types/express": "^4.17.17",
@@ -44,6 +45,7 @@
         "prettier": "^2.8.7",
         "prettier-eslint": "^15.0.1",
         "prisma": "^4.13.0",
+        "prisma-erd-generator": "^1.7.0",
         "supertest": "^6.3.3",
         "ts-jest": "^29.1.0",
         "ts-node": "^10.9.1",
