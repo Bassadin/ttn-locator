@@ -63,16 +63,15 @@ jobs:
                   services: |
                       db
 
-            - name: pnpm install
-              run: pnpm install --frozen-lockfile
-            - name: pnpm build
-              run: pnpm run build
+            - run: pnpm install --frozen-lockfile
+            - run: npx prisma generate
+
+            - run: pnpm run build
 
             - name: Prisma seed
               run: npx prisma migrate reset --force
 
-            - name: Run tests
-              run: pnpm run jest:test
+            - run: pnpm run jest:test
     eslint:
         runs-on: ubuntu-latest
         steps:
