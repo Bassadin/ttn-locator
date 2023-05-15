@@ -16,6 +16,7 @@
         "eslint:fix": "eslint --fix",
         "prisma:reset": "prisma migrate reset",
         "prisma:generate": "npx prisma generate",
+        "prisma:generate-client": "npx prisma generate --generator client",
         "prisma:studio": "prisma studio",
         "prisma:migrate:prod": "prisma migrate deploy",
         "prettier:scan": "prettier --check .",
