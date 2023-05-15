@@ -5,7 +5,7 @@ const router = express.Router();
 
 // 📡 Gateways
 
-// Get all gateways
+// Get all gateways with count of associated GPS datapoints
 router.get('/', async (request: Request, response: Response) => {
     const gateways = await prisma.gateway.findMany({
         include: {
@@ -15,6 +15,27 @@ router.get('/', async (request: Request, response: Response) => {
         },
     });
     response.send({ message: 'success', data: gateways });
+});
+
+// Get single gateway data with count of associated GPS datapoints
+router.get('/:id', async (request: Request, response: Response) => {
+    const gateway = await prisma.gateway.findUnique({
+        where: {
+            gatewayId: request.params.id,
+        },
+        include: {
+            _count: {
+                select: { ttnmapperDatapoints: true },
+            },
+        },
+    });
+
+    if (!gateway) {
+        response.status(404).send({ message: 'Gateway not found' });
+        return;
+    }
+
+    response.send({ message: 'success', data: gateway });
 });
 
 // Get Device GPS Datapoints associated with a specific Gateway
