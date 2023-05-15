@@ -36,12 +36,6 @@ Content-Type: application/json
     "subscription": true
 }
 
-###
-
-// Get data from specific device from ttnmapper
-
-GET http://localhost:{{$dotenv PORT}}/devices/ttnmapper_api/loris-hfu-001
-
 ### Device GPS Datapoints
 
 // Get all device gps datapoints

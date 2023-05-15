@@ -19,7 +19,7 @@ router.get('/', async (request: Request, response: Response) => {
     response.send({ message: 'success', data: devices });
 });
 
-// Add a new device
+// Create a new device
 router.post('/', async (request: Request, response: Response) => {
     logger.info('Adding new device: ' + request.body.deviceId);
     if (!(await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper(request.body.deviceId))) {
@@ -40,11 +40,15 @@ router.post('/', async (request: Request, response: Response) => {
     response.send({ message: 'success', data: device });
 });
 
-// Get device info from TTN Mapper by id
-router.get('/ttnmapper_api/:id', async (request: Request, response: Response) => {
-    const startDate = new Date(Date.now() - 30 * (24 * 60 * 60 * 1000));
-    const deviceGPSDatapoints = await TTNMapperConnection.getNewTTNMapperDataForDevice(request.params.id, startDate);
-    response.send({ message: 'success', amountOfRecords: deviceGPSDatapoints.length });
+// Change the subscription of a device
+router.put('/:id', async (request: Request, response: Response) => {
+    const device = await prisma.device.update({
+        where: { deviceId: request.params.id },
+        data: {
+            subscription: request.body.subscription,
+        },
+    });
+    response.send({ message: 'success', data: device });
 });
 
 export default router;

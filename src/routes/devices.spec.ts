@@ -15,11 +15,6 @@ describe('Test devices routes', () => {
         );
     });
 
-    test('Get TTNMapper API route with valid Device id', async () => {
-        const res = await request(app).get('/devices/ttnmapper_api/loris-tracker-hfu');
-        expect(res.statusCode).toEqual(200);
-    });
-
     describe('POST /devices/', () => {
         test('Add device with valid ID', async () => {
             // May need to be adjusted later
