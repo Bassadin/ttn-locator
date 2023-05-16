@@ -28,7 +28,7 @@ The goal is to write queries that can determine a device's location based on the
 - `prisma generate` to generate the Prisma client classes
 - `prisma migrate reset` to run the migrations and seeders
 - `pnpm run dev` to start the development server
-- `pnpm run jest:test` to run the tests
+- `pnpm run test:run` to run the tests
 
 ## 🚀 Production Build
 
