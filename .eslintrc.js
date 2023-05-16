@@ -8,7 +8,6 @@ module.exports = {
     extends: ['prettier', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
     env: {
         node: true,
-        jest: true,
     },
     rules: {
         '@typescript-eslint/no-explicit-any': 'warn',
