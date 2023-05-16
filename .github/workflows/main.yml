@@ -77,7 +77,7 @@ jobs:
             - name: Prisma seed
               run: npx prisma migrate reset --force
 
-            - run: pnpm jest:test
+            - run: pnpm test:run
     eslint:
         runs-on: ubuntu-latest
         steps:
