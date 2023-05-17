@@ -8,6 +8,7 @@ export default defineConfig({
         include: ['src/**/*.spec.ts'],
         threads: false,
         setupFiles: ['src/tests/helpers/setup.ts'],
+        globals: true,
     },
     resolve: {
         alias: {
