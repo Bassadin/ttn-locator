@@ -11,9 +11,12 @@ export default defineConfig({
         // environment: 'jsdom',
         include: ['src/**/*.spec.ts'],
         threads: false,
-        setupFiles: ['src/tests/helpers/setup.mjs'],
+        setupFiles: ['src/tests/helpers/setup.ts'],
         globalSetup: ['src/tests/helpers/globalSetupAndTeardown.mjs'],
         globals: true,
+        coverage: {
+            provider: 'istanbul', // or 'c8'
+        },
     },
     resolve: {
         alias: {
