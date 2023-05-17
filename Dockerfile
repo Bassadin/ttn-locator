@@ -24,7 +24,7 @@ ENV NODE_ENV=production
 EXPOSE ${PORT}
 
 # Health check
-HEALTHCHECK CMD node ./additional_scripts/healthcheck.mjs
+HEALTHCHECK CMD node ./scripts/healthcheck.mjs
 
 # Start the server using the production build
 CMD pnpm start:migrate:prod
