@@ -56,12 +56,6 @@ jobs:
               with:
                   version: 7
 
-            - uses: isbang/compose-action@v1.4.1
-              with:
-                  compose-file: './docker-compose.yml'
-                  down-flags: '--volumes'
-                  services: 'db'
-
             - run: pnpm install --frozen-lockfile
             - run: pnpm prisma:generate-client
 
@@ -72,9 +66,6 @@ jobs:
               with:
                   name: ttn-locator-backend
                   path: dist
-
-            - name: Prisma seed
-              run: npx prisma migrate reset --force
 
             - run: pnpm test:run
     eslint:
