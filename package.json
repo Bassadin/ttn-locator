@@ -14,13 +14,13 @@
         "prettier:format": "prettier --write \"src/**/*.ts\"",
         "eslint:scan": "eslint",
         "eslint:fix": "eslint --fix",
+        "prettier:scan": "prettier --check .",
+        "prettier:fix": "prettier --write .",
         "prisma:reset": "prisma migrate reset",
         "prisma:generate": "npx prisma generate",
         "prisma:generate-client": "npx prisma generate --generator client",
         "prisma:studio": "prisma studio",
         "prisma:migrate:prod": "prisma migrate deploy",
-        "prettier:scan": "prettier --check .",
-        "prettier:fix": "prettier --write .",
         "prepare": "husky install",
         "test:ui": "vitest --ui",
         "test:run": "vitest run"
@@ -55,6 +55,7 @@
         "vitest": "^0.31.0"
     },
     "dependencies": {
+        "@jcoreio/wait-for-postgres": "^2.0.0",
         "@prisma/client": "^4.14.0",
         "@types/superagent": "^4.1.17",
         "cors": "^2.8.5",
