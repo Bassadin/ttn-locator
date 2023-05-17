@@ -12,7 +12,7 @@ export default defineConfig({
         // environment: 'jsdom',
         include: ['src/**/*.spec.ts'],
         threads: false,
-        setupFiles: ['src/tests/helpers/setup.ts'],
+        setupFiles: ['src/tests/helpers/setup.mjs'],
         globals: true,
     },
     resolve: {
