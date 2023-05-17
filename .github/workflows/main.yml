@@ -60,8 +60,6 @@ jobs:
               with:
                   compose-file: './docker-compose.test.yml'
                   down-flags: '--volumes'
-                  services: |
-                      db
 
             - run: pnpm install --frozen-lockfile
             - run: pnpm prisma:generate-client
