@@ -1,8 +1,6 @@
 import { CronJob } from 'cron';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
 import logger from '@/middleware/logger';
-import GatewayLocationGetter from '@/helpers/GatewayLocationGetter';
-import Location from '@/dataclasses/Location';
 import prisma from '@/global/prisma';
 import { TTNAPIGatewayDataResponse } from '@/types/Gateways';
 import superagent from 'superagent';
@@ -42,6 +40,14 @@ export default class GetNewTTNMapperDataCronJob {
                 await TTNMapperConnection.getTtnMapperApiStartSearchDateForDevice(eachDeviceSubscription.deviceId),
             );
             for (const eachTTNMapperAPIDatapoint of ttnMapperApiResponse) {
+                // Skip invalid dates
+                if (new Date(eachTTNMapperAPIDatapoint.gateway_time) <= new Date(1950, 1, 1)) {
+                    logger.warn(
+                        `Gateway time is invalid for TTN Mapper datapoint ${eachTTNMapperAPIDatapoint.database_id}, skipping...`,
+                    );
+                    continue;
+                }
+
                 logger.debug(
                     `=> Inserting new TTNMapper data ${eachTTNMapperAPIDatapoint.database_id} for Device ${eachDeviceSubscription.deviceId}`,
                 );
@@ -78,24 +84,18 @@ export default class GetNewTTNMapperDataCronJob {
 
                 gatewayIDsToUpdate.add(gateway.gatewayId);
 
-                if (new Date(eachTTNMapperAPIDatapoint.gateway_time) > new Date(1900, 1, 1)) {
-                    await prisma.ttnMapperDatapoint.upsert({
-                        where: { id: eachTTNMapperAPIDatapoint.database_id },
-                        update: {},
-                        create: {
-                            id: eachTTNMapperAPIDatapoint.database_id,
-                            rssi: eachTTNMapperAPIDatapoint.rssi,
-                            snr: eachTTNMapperAPIDatapoint.snr,
-                            timestamp: eachTTNMapperAPIDatapoint.gateway_time,
-                            deviceGPSDatapoint: { connect: { id: deviceGPSDatapoint.id } },
-                            gateway: { connect: { gatewayId: gateway.gatewayId } },
-                        },
-                    });
-                } else {
-                    logger.warn(
-                        `Gateway time is invalid for TTN Mapper datapoint ${eachTTNMapperAPIDatapoint.database_id}, skipping...`,
-                    );
-                }
+                await prisma.ttnMapperDatapoint.upsert({
+                    where: { id: eachTTNMapperAPIDatapoint.database_id },
+                    update: {},
+                    create: {
+                        id: eachTTNMapperAPIDatapoint.database_id,
+                        rssi: eachTTNMapperAPIDatapoint.rssi,
+                        snr: eachTTNMapperAPIDatapoint.snr,
+                        timestamp: eachTTNMapperAPIDatapoint.gateway_time,
+                        deviceGPSDatapoint: { connect: { id: deviceGPSDatapoint.id } },
+                        gateway: { connect: { gatewayId: gateway.gatewayId } },
+                    },
+                });
             }
         }
 
