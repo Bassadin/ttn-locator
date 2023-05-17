@@ -45,8 +45,6 @@ jobs:
               uses: frenck/action-yamllint@v1.4.0
     build-and-test:
         runs-on: ubuntu-latest
-        env:
-            DATABASE_URL: postgresql://postgres:postgres@localhost:57010/ttn-locator-backend
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3

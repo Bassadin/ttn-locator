@@ -23,7 +23,8 @@
         "prisma:migrate:prod": "prisma migrate deploy",
         "prepare": "husky install",
         "test:ui": "vitest --ui",
-        "test:run": "vitest run"
+        "test:run": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
     "devDependencies": {
         "@mermaid-js/mermaid-cli": "^10.1.0",
