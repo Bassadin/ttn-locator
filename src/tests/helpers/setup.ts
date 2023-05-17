@@ -1,6 +1,7 @@
-import resetDb from './reset-db';
+// import resetDb from './reset-db';
 import { beforeEach } from 'vitest';
 
 beforeEach(async () => {
-    await resetDb();
+    // TODO re-enable this later when docker container works
+    // await resetDb();
 });
