@@ -7,6 +7,6 @@ services:
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
-            - POSTGRES_DB=ttn-locator-backend_test
+            - POSTGRES_DB=ttn-locator-backend_TEST
         ports:
             - "57110:5432"

@@ -13,6 +13,7 @@ export default defineConfig({
         include: ['src/**/*.spec.ts'],
         threads: false,
         setupFiles: ['src/tests/helpers/setup.mjs'],
+        globalSetup: ['src/tests/helpers/globalSetupAndTeardown.mjs'],
         globals: true,
     },
     resolve: {
