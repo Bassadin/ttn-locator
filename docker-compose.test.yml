@@ -1,5 +1,5 @@
 ---
-version: "3.9"
+version: '3.9'
 services:
     test-db:
         restart: always
@@ -9,7 +9,7 @@ services:
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=ttn-locator-backend_TEST
         ports:
-            - "57110:5432"
+            - '57110:5432'
         networks:
             - test-network
 

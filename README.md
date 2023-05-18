@@ -13,32 +13,32 @@ The goal is to write queries that can determine a device's location based on the
 
 ## 🍔 Stack Specs
 
-- Node.js
-- Express
-- TypeScript
-- Prisma
-- Postgres
+-   Node.js
+-   Express
+-   TypeScript
+-   Prisma
+-   Postgres
 
 ## 🧬 Development
 
-- `pnpm i`
-- `pnpm i -g prisma ts-node`
-- Copy the `.env.sample` to `.env` and fill in the values if needed
-- Run `docker-compose up -d` to start the database
-- `prisma generate` to generate the Prisma client classes
-- `prisma migrate reset` to run the migrations and seeders
-- `pnpm run dev` to start the development server
-- `pnpm run test:run` to run the tests
+-   `pnpm i`
+-   `pnpm i -g prisma ts-node`
+-   Copy the `.env.sample` to `.env` and fill in the values if needed
+-   Run `docker-compose up -d` to start the database
+-   `prisma generate` to generate the Prisma client classes
+-   `prisma migrate reset` to run the migrations and seeders
+-   `pnpm run dev` to start the development server
+-   `pnpm run test:run` to run the tests
 
 ## 🚀 Production Build
 
-- Run the production build
+-   Run the production build
 
 ```bash
 pnpm build
 ```
 
-- Start the production server
+-   Start the production server
 
 ```bash
 pnpm start
