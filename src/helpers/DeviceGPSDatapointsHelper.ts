@@ -1,5 +1,5 @@
 import prisma from '@/global/prisma';
-import { RssiSimilarityFilter } from '@/types/GPSDatapoints';
+import RssiSimilarityFilter from '@/types/RssiSimilarityFilter';
 import { DeviceGPSDatapoint } from '@prisma/client';
 
 export default class DeviceGPSDatapointsHelper {

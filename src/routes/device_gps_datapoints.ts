@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import logger from '@/middleware/logger';
 import prisma from '@/global/prisma';
-import { RssiSimilarityFilter } from '@/types/GPSDatapoints';
+import RssiSimilarityFilter from '@/types/RssiSimilarityFilter';
 import DeviceGPSDatapointsHelper from '@/helpers/DeviceGPSDatapointsHelper';
 
 const router = express.Router();

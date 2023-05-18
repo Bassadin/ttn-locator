@@ -1,6 +1,6 @@
 import prisma from '@/global/prisma';
 import logger from '@/middleware/logger';
-import { TTNMapperGatewayAPIDeviceGPSDatapoint } from '@/types/GPSDatapoints';
+import TTNMapperGatewayAPIDeviceGPSDatapoint from '@/types/TTNMapperGatewayAPIDeviceGPSDatapoint';
 import superagent from 'superagent';
 
 export default class TTNMapperConnection {

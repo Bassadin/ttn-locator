@@ -2,7 +2,7 @@ import { CronJob } from 'cron';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
 import logger from '@/middleware/logger';
 import prisma from '@/global/prisma';
-import { TTNAPIGatewayDataResponse } from '@/types/Gateways';
+import TTNAPIGatewayDataResponse from '@/types/TTNAPIGatewayDataResponse';
 import superagent from 'superagent';
 
 export default class GetNewTTNMapperDataCronJob {
