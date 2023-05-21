@@ -3,6 +3,7 @@ import logger from '@/middleware/logger';
 import prisma from '@/global/prisma';
 import RssiSimilarityFilter from '@/types/RssiSimilarityFilter';
 import DeviceGPSDatapointsHelper from '@/helpers/DeviceGPSDatapointsHelper';
+import { DeviceGPSDatapoint } from '@prisma/client';
 
 const router = express.Router();
 
@@ -33,6 +34,35 @@ router.get('/', async (request: Request, response: Response) => {
 
     response.send({
         data: deviceGPSDatapoints,
+    });
+});
+
+// Get the count of device gps datapoints grouped by the count of related ttn mapper datapoints
+router.get('/count_by_ttnmapper_datapoints', async (_request: Request, response: Response) => {
+    interface DatapointsCountQueryResult {
+        ttn_mapper_datapoints_count: number;
+        gps_datapoints_amount: number;
+    }
+
+    const dbQueryResult = (await prisma.$queryRaw`
+        SELECT COUNT(*) as gps_datapoints_amount, ttn_mapper_datapoints_count as ttn_mapper_datapoints_count
+        FROM (
+            SELECT d.id, COUNT(t.id) as ttn_mapper_datapoints_count
+            FROM "DeviceGPSDatapoint" d
+            LEFT JOIN "TtnMapperDatapoint" t ON d.id = t."deviceGPSDatapointId"
+            GROUP BY d.id
+        ) subquery
+        GROUP BY ttn_mapper_datapoints_count
+        ORDER BY ttn_mapper_datapoints_count;
+    `) as DatapointsCountQueryResult[];
+
+    const convertedResult = dbQueryResult.map((eachRow) => ({
+        count: Number(eachRow.ttn_mapper_datapoints_count),
+        amount: Number(eachRow.gps_datapoints_amount),
+    }));
+
+    response.send({
+        data: convertedResult,
     });
 });
 
