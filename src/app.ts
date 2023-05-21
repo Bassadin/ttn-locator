@@ -32,7 +32,7 @@ const pinoHttpLogger = pinoHttp({
 });
 
 /* istanbul ignore next  */
-if (process.env.NODE_ENV != 'testing') {
+if (process.env.NODE_ENV != 'test') {
     app.use(pinoHttpLogger);
 }
 
@@ -55,9 +55,11 @@ app.use(catchAllErrorHandler);
 
 // Init scheduled jobs
 /* istanbul ignore next  */
-if (process.env.NODE_ENV != 'testing') {
+if (process.env.NODE_ENV != 'test') {
     GetNewTTNMapperDataJob.getInstance().initScheduledJob();
     DeleteEmptyDeviceGpsDatapointsJob.getInstance().initScheduledJob();
+} else {
+    logger.warn('Scheduled jobs are not running in test environment');
 }
 
 export default app;

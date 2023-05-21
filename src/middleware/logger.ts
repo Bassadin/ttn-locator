@@ -3,7 +3,7 @@ import pretty from 'pino-pretty';
 
 let loggerOptions = {};
 
-if (process.env.NODE_ENV === 'testing') {
+if (process.env.NODE_ENV === 'test') {
     // https://github.com/pinojs/pino-pretty#usage-with-jest
     loggerOptions = pretty({ sync: true });
 }
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'testing') {
 const logger = pino(loggerOptions);
 
 /* istanbul ignore if  */
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     logger.level = 'debug';
 }
 
