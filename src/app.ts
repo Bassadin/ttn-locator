@@ -14,7 +14,8 @@ import prismaErrorHandler from '@/middleware/prismaErrorHandler';
 import catchAllErrorHandler from '@/middleware/catchAllErrorHandler';
 
 // Scheduled jobs
-import GetNewTTNMapperDataCronJob from './scheduledFunctions/getNewTTNMapperData';
+import GetNewTTNMapperDataJob from '@/scheduledFunctions/GetNewTTNMapperDataJob';
+import DeleteEmptyDeviceGpsDatapointsJob from '@/scheduledFunctions/DeleteEmptyDeviceGpsDatapointsJob';
 
 // Fastify instance
 const app: Application = express();
@@ -45,7 +46,7 @@ app.use(cors());
 app.use('/', BaseRoutes);
 app.use('/ttnmapper_datapoints', TTNMapperDatapointsRoutes);
 app.use('/devices', DevicesRoutes);
-app.use(`/device_gps_datapoints`, DeviceGPSDatapointsRoutes);
+app.use('/device_gps_datapoints', DeviceGPSDatapointsRoutes);
 app.use('/gateways', GatewaysRoutes);
 
 // Error handler
@@ -55,12 +56,8 @@ app.use(catchAllErrorHandler);
 // Init scheduled jobs
 /* istanbul ignore next  */
 if (process.env.NODE_ENV != 'testing') {
-    GetNewTTNMapperDataCronJob.initScheduledJob();
-}
-
-/* istanbul ignore next  */
-if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'production') {
-    GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
+    GetNewTTNMapperDataJob.getInstance().initScheduledJob();
+    DeleteEmptyDeviceGpsDatapointsJob.getInstance().initScheduledJob();
 }
 
 export default app;

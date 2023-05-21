@@ -1,23 +1,28 @@
-import { CronJob } from 'cron';
 import TTNMapperConnection from '@/helpers/TTNMapperConnection';
 import logger from '@/middleware/logger';
 import prisma from '@/global/prisma';
 import TTNAPIGatewayDataResponse from '@/types/TTNAPIGatewayDataResponse';
 import superagent from 'superagent';
+import BaseJob from '@/scheduledFunctions/BaseJob';
 
-export default class GetNewTTNMapperDataCronJob {
-    /* istanbul ignore next */
-    public static initScheduledJob(): void {
-        // https://crontab.guru/#0_*/2_*_*_* (Every 2 hours)
-        const ttnmapperJob = new CronJob('0 */2 * * *', () => {
-            this.getNewTTNMapperDataForSubscribedDevices();
-        });
-
-        ttnmapperJob.start();
-        logger.info('Scheduled job for fetching data from TTN Mapper initialized');
+export default class GetNewTTNMapperDataJob extends BaseJob {
+    private static INSTANCE: GetNewTTNMapperDataJob;
+    protected constructor() {
+        super();
     }
 
-    public static async getNewTTNMapperDataForSubscribedDevices() {
+    public static getInstance(): GetNewTTNMapperDataJob {
+        if (!this.INSTANCE) {
+            this.INSTANCE = new this();
+        }
+
+        return this.INSTANCE;
+    }
+
+    public readonly JOB_NAME = 'GetNewTTNMapperData';
+    public readonly CRON_PATTERN = '0 */2 * * *';
+
+    public override async executeJob() {
         const subscribedDevices = await prisma.device.findMany({
             where: {
                 subscription: true,
@@ -117,7 +122,7 @@ export default class GetNewTTNMapperDataCronJob {
         logger.info(`Finished updating metadata for ${gatewayIDsToUpdate.size} gateways.`);
     }
 
-    public static async updateMetadataForGatewaWithID(gatewayID: string): Promise<void> {
+    public async updateMetadataForGatewaWithID(gatewayID: string): Promise<void> {
         superagent
             .get(`https://www.thethingsnetwork.org/gateway-data/gateway/${gatewayID}`)
             .then(async (response) => {

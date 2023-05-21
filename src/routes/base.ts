@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import GetterFunctions from '@/helpers/GetterFunctions';
-import GetNewTTNMapperDataCronJob from '@/scheduledFunctions/getNewTTNMapperData';
+import GetNewTTNMapperDataJob from '@/scheduledFunctions/GetNewTTNMapperDataJob';
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.get('/healthcheck', async (request: Request, response: Response) => {
 });
 
 router.post('/fetch_device_data', async (_request: Request, _response: Response) => {
-    await GetNewTTNMapperDataCronJob.getNewTTNMapperDataForSubscribedDevices();
+    await GetNewTTNMapperDataJob.getInstance().executeJob();
 
     _response.send({ message: 'OK' });
 });
