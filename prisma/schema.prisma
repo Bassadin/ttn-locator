@@ -21,9 +21,9 @@ generator erd_svg {
 model TtnMapperDatapoint {
     id                   Int                @id
     timestamp            DateTime           @db.Timestamp(6) // 6 digits of precision for the fractional seconds
-    deviceGPSDatapoint   DeviceGPSDatapoint @relation(fields: [deviceGPSDatapointId], references: [id])
+    deviceGPSDatapoint   DeviceGPSDatapoint @relation(fields: [deviceGPSDatapointId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     deviceGPSDatapointId Int
-    gateway              Gateway            @relation(fields: [gatewayId], references: [gatewayId])
+    gateway              Gateway            @relation(fields: [gatewayId], references: [gatewayId], onDelete: Cascade, onUpdate: Cascade)
     gatewayId            String
     rssi                 Int
     snr                  Float
@@ -32,7 +32,7 @@ model TtnMapperDatapoint {
 model DeviceGPSDatapoint {
     id                  Int                  @id @default(autoincrement())
     timestamp           DateTime             @db.Timestamp(6) // 6 digits of precision for the fractional seconds
-    device              Device               @relation(fields: [deviceId], references: [deviceId])
+    device              Device               @relation(fields: [deviceId], references: [deviceId], onDelete: Cascade, onUpdate: Cascade)
     deviceId            String
     latitude            Float
     longitude           Float
