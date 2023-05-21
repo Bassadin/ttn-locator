@@ -3,7 +3,6 @@ import logger from '@/middleware/logger';
 import prisma from '@/global/prisma';
 import RssiSimilarityFilter from '@/types/RssiSimilarityFilter';
 import DeviceGPSDatapointsHelper from '@/helpers/DeviceGPSDatapointsHelper';
-import { DeviceGPSDatapoint } from '@prisma/client';
 
 const router = express.Router();
 
@@ -56,9 +55,9 @@ router.get('/count_by_ttnmapper_datapoints', async (_request: Request, response:
         ORDER BY ttn_mapper_datapoints_count;
     `) as DatapointsCountQueryResult[];
 
-    const convertedResult = dbQueryResult.map((eachRow) => ({
-        count: Number(eachRow.ttn_mapper_datapoints_count),
-        amount: Number(eachRow.gps_datapoints_amount),
+    const convertedResult: DatapointsCountQueryResult[] = dbQueryResult.map((eachRow) => ({
+        ttn_mapper_datapoints_count: Number(eachRow.ttn_mapper_datapoints_count),
+        gps_datapoints_amount: Number(eachRow.gps_datapoints_amount),
     }));
 
     response.send({
