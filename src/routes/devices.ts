@@ -51,4 +51,18 @@ router.put('/:id', async (request: Request, response: Response) => {
     response.send({ message: 'success', data: device });
 });
 
+// Delete a device (associated GPS datapoints will be deleted as well because of the cascading delete rule)
+router.delete('/:id', async (request: Request, response: Response) => {
+    const device = await prisma.device.delete({
+        where: { deviceId: request.params.id },
+    });
+
+    if (!device) {
+        response.status(404).send({ message: 'Device not found' });
+        return;
+    }
+
+    response.send({ message: 'success', data: device });
+});
+
 export default router;
