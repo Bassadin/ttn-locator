@@ -20,7 +20,8 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
     }
 
     public readonly JOB_NAME = 'GetNewTTNMapperData';
-    public readonly CRON_PATTERN = '0 */2 * * *';
+    // https://crontab.guru/#0_*/1_*_*_* => Every hour
+    public readonly CRON_PATTERN = '0 */1 * * *';
 
     public override async executeJob() {
         const subscribedDevices = await prisma.device.findMany({

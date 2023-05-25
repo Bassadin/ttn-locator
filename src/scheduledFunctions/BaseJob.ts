@@ -7,7 +7,7 @@ export default abstract class BaseJob {
 
     /* istanbul ignore next */
     public initScheduledJob(): void {
-        const ttnmapperJob = new CronJob('0 */2 * * *', () => {
+        const ttnmapperJob = new CronJob(this.CRON_PATTERN, () => {
             this.executeJob();
         });
 
