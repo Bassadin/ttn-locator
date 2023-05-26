@@ -46,6 +46,7 @@ services:
         ports:
             - '8080:5000'
         environment:
+            # This does not work yet
             VITE_TTNMAPPER_LOCATOR_API_URL: http://ttn-locator-backend:3000
 volumes:
     postgres-data:
