@@ -44,9 +44,9 @@ services:
         links:
             - ttn-locator-backend
         ports:
-            - '8080:80'
+            - '8080:5000'
         environment:
-            - VITE_TTNMAPPER_LOCATOR_API_URL=http://ttn-locator-backend:3000
+            VITE_TTNMAPPER_LOCATOR_API_URL: http://ttn-locator-backend:3000
 volumes:
     postgres-data:
     pgadmin-data:
