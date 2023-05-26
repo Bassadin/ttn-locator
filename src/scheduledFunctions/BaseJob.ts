@@ -8,11 +8,12 @@ export default abstract class BaseJob {
     /* istanbul ignore next */
     public initScheduledJob(): void {
         const ttnmapperJob = new CronJob(this.CRON_PATTERN, () => {
+            logger.info(`###### Executing job ${this.JOB_NAME} with cron pattern ${this.CRON_PATTERN} ######`);
             this.executeJob();
         });
 
         ttnmapperJob.start();
-        logger.info(`Scheduled job: ${this.JOB_NAME}`);
+        logger.info(`Scheduled job ${this.JOB_NAME} with cron pattern ${this.CRON_PATTERN}`);
 
         logger.info(`=> Executing job ${this.JOB_NAME} on startup`);
         this.executeJob();
