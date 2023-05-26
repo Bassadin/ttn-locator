@@ -62,7 +62,7 @@ distance_filtered AS (
             AND longitude = prev_longitude
             AND altitude = prev_altitude
             AND hdop = prev_hdop
-            ELSE NULL
+            ELSE false
         END AS is_same_as_previous
     FROM
         distance_calculations
