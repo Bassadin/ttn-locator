@@ -16,7 +16,7 @@ export default class DeleteEmptyDeviceGpsDatapointsJob extends BaseJob {
     }
 
     public readonly JOB_NAME = 'ClearEmptyDeviceGpsDatapoints';
-    public readonly CRON_PATTERN = '0 */12 * * *';
+    public readonly CRON_PATTERN = '0 */4 * * *';
 
     public override async executeJob() {
         await prisma.deviceGPSDatapoint.deleteMany({
