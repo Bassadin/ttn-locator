@@ -67,10 +67,15 @@ distance_filtered AS (
     FROM
         distance_calculations
 )
-SELECT
-    *
-FROM
-    distance_filtered
+DELETE FROM
+    "DeviceGPSDatapoint"
 WHERE
-    speed > 40 -- maximum speed in meters per second
-    OR is_same_as_previous = true
+    id IN (
+        SELECT
+            id
+        FROM
+            distance_filtered
+        WHERE
+            speed >= 50
+            OR is_same_as_previous = true -- maximum speed in meters per second and check for same values as previous measurement
+    );

@@ -16,6 +16,7 @@ import catchAllErrorHandler from '@/middleware/catchAllErrorHandler';
 // Scheduled jobs
 import GetNewTTNMapperDataJob from '@/scheduledFunctions/GetNewTTNMapperDataJob';
 import DeleteEmptyDeviceGpsDatapointsJob from '@/scheduledFunctions/DeleteEmptyDeviceGpsDatapointsJob';
+import CleanGpsDatapointsJob from './scheduledFunctions/CleanGpsDatapointsJob';
 
 // Fastify instance
 const app: Application = express();
@@ -58,6 +59,7 @@ app.use(catchAllErrorHandler);
 if (process.env.NODE_ENV != 'test') {
     GetNewTTNMapperDataJob.getInstance().initScheduledJob();
     DeleteEmptyDeviceGpsDatapointsJob.getInstance().initScheduledJob();
+    CleanGpsDatapointsJob.getInstance().initScheduledJob();
 } else {
     logger.warn('Scheduled jobs are not running in test environment');
 }

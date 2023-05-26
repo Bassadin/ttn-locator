@@ -1,0 +1,103 @@
+import prisma from '@/global/prisma';
+import logger from '@/middleware/logger';
+import BaseJob from '@/scheduledFunctions/BaseJob';
+
+export default class CleanGpsDatapointsJob extends BaseJob {
+    private static INSTANCE: CleanGpsDatapointsJob;
+    protected constructor() {
+        super();
+    }
+
+    public static getInstance(): CleanGpsDatapointsJob {
+        if (!this.INSTANCE) {
+            this.INSTANCE = new this();
+        }
+
+        return this.INSTANCE;
+    }
+
+    public readonly JOB_NAME = 'CleanGpsDatapoints';
+    public readonly CRON_PATTERN = '0 */2 * * *';
+
+    public override async executeJob() {
+        const results = await prisma.$executeRaw`
+            WITH distance_calculations AS (
+            SELECT
+                id,
+                timestamp,
+                "deviceId",
+                latitude,
+                longitude,
+                altitude,
+                hdop,
+                LAG(latitude) OVER (
+                    PARTITION BY "deviceId"
+                    ORDER BY
+                        timestamp
+                ) AS prev_latitude,
+                LAG(longitude) OVER (
+                    PARTITION BY "deviceId"
+                    ORDER BY
+                        timestamp
+                ) AS prev_longitude,
+                LAG(altitude) OVER (
+                    PARTITION BY "deviceId"
+                    ORDER BY
+                        timestamp
+                ) AS prev_altitude,
+                LAG(hdop) OVER (
+                    PARTITION BY "deviceId"
+                    ORDER BY
+                        timestamp
+                ) AS prev_hdop,
+                LAG(timestamp) OVER (
+                    PARTITION BY "deviceId"
+                    ORDER BY
+                        timestamp
+                ) AS prev_timestamp
+            FROM
+                "DeviceGPSDatapoint"
+        ),
+        distance_filtered AS (
+            SELECT
+                *,
+                -- Calculate speed in meters per second between previous and current point
+                CASE
+                    WHEN prev_latitude IS NOT NULL
+                    AND prev_longitude IS NOT NULL
+                    AND prev_timestamp IS NOT NULL THEN ST_DistanceSphere(
+                        ST_MakePoint(longitude, latitude),
+                        ST_MakePoint(prev_longitude, prev_latitude)
+                    ) / EXTRACT(
+                        EPOCH
+                        FROM
+                            (timestamp - prev_timestamp)
+                    )
+                    ELSE NULL
+                END AS speed,
+                -- Check if current point data is the same as in the previous point
+                CASE
+                    WHEN prev_latitude IS NOT NULL
+                    AND prev_longitude IS NOT NULL
+                    AND prev_altitude IS NOT NULL
+                    AND prev_hdop IS NOT NULL
+                    AND prev_timestamp IS NOT NULL THEN latitude = prev_latitude
+                    AND longitude = prev_longitude
+                    AND altitude = prev_altitude
+                    AND hdop = prev_hdop
+                    ELSE false
+                END AS is_same_as_previous
+            FROM
+                distance_calculations
+        )
+        DELETE FROM "DeviceGPSDatapoint"
+        WHERE id IN (
+            SELECT id
+            FROM distance_filtered
+            WHERE speed >= 50 OR is_same_as_previous = true -- maximum speed in meters per second and check for same values as previous measurement
+        );
+        `;
+
+        logger.info(`Cleaned ${results} unrealistic values`);
+    }
+}
