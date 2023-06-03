@@ -40,6 +40,8 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
 
         const gatewayIDsToUpdate: Set<string> = new Set();
 
+        const gpsDatapointsAmountBefore = await prisma.deviceGPSDatapoint.count();
+
         for (const eachDeviceSubscription of subscribedDevices) {
             const ttnMapperApiResponse = await TTNMapperConnection.getNewTTNMapperDataForDevice(
                 eachDeviceSubscription.deviceId,
@@ -105,7 +107,12 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
             }
         }
 
-        logger.info(`Finished fetching data from TTN Mapper API for ${subscribedDevicesAmount} subscribed devices`);
+        const gpsDatapointsAmountAfter = await prisma.deviceGPSDatapoint.count();
+        const gpsDatapointsAmountAdded = gpsDatapointsAmountAfter - gpsDatapointsAmountBefore;
+
+        logger.info(
+            `Finished fetching data from TTN Mapper API for ${subscribedDevicesAmount} subscribed devices. Amount of new GPS datapoints: ${gpsDatapointsAmountAdded}`,
+        );
 
         logger.info(`Updating metadata for ${gatewayIDsToUpdate.size} gateways.`);
 
@@ -114,9 +121,6 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
 
         for (const eachGatewayID of gatewayIDsToUpdate) {
             promises.push(this.updateMetadataForGatewaWithID(eachGatewayID));
-            // TODO: update gateway name and description
-            // There is https://api.ttnmapper.org/network/NS_TTS_V3%3A%2F%2Fttn%40000013/gateways but it always gets every gateway...
-            // https://www.thethingsnetwork.org/gateway-data/gateway/hfu-lr8-001 this would work
         }
 
         await Promise.all(promises);
