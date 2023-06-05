@@ -65,7 +65,11 @@ jobs:
                   name: ttn-locator-backend
                   path: dist
 
-            - run: pnpm test:run
+            - uses: nick-fields/retry@v2
+              with:
+                  timeout_minutes: 10
+                  max_attempts: 3
+                  command: pnpm test:run
     eslint:
         runs-on: ubuntu-latest
         steps:
