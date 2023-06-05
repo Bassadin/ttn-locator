@@ -5,7 +5,7 @@ FROM node:lts-alpine AS base
 WORKDIR /app
 
 # Install pnpm
-RUN npm install -g pnpm
+RUN npm install -g pnpm@8.6.1
 
 # Copy prisma schema
 COPY prisma ./prisma/
