@@ -23,6 +23,10 @@ export default class TTNMapperConnection {
             `https://api.ttnmapper.org/device/data?dev_id=${deviceID}&start_time=${startDateAndTime.toISOString()}`,
         );
 
+        if (apiResponse.body.success == false || apiResponse.statusCode != 200 || apiResponse.body == undefined) {
+            throw new Error(`TTN Mapper api errored: ${JSON.stringify(apiResponse.body)}`);
+        }
+
         logger.info(`TTN Mapper api returned ${apiResponse.body.length} records for the Device ${deviceID}`);
 
         return apiResponse.body;
