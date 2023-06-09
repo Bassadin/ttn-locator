@@ -23,7 +23,7 @@ export default class TTNMapperConnection {
             `https://api.ttnmapper.org/device/data?dev_id=${deviceID}&start_time=${startDateAndTime.toISOString()}`,
         );
 
-        if (apiResponse.body.success == false || apiResponse.statusCode != 200 || apiResponse.body == undefined) {
+        if (apiResponse.body.success == false || apiResponse.body == undefined) {
             throw new Error(`TTN Mapper api errored: ${JSON.stringify(apiResponse.body)}`);
         }
 
@@ -64,15 +64,5 @@ export default class TTNMapperConnection {
         );
 
         return new Date(latestDeviceGPSDatapoint.timestamp.getTime());
-    }
-
-    public static async checkIfDeviceExistsOnTtnMapper(deviceID: string): Promise<boolean> {
-        if (!deviceID) {
-            throw new Error('deviceID must be defined');
-        }
-
-        const apiResponse = await superagent.get(`https://api.ttnmapper.org/device/data?dev_id=${deviceID}`);
-
-        return apiResponse.body.length > 0;
     }
 }

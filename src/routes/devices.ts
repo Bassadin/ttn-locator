@@ -21,12 +21,6 @@ router.get('/', async (request: Request, response: Response) => {
 
 // Create a new device
 router.post('/', async (request: Request, response: Response) => {
-    logger.info('Adding new device: ' + request.body.deviceId);
-    if (!(await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper(request.body.deviceId))) {
-        response.status(400).send({ message: 'Device does not exist on TTN Mapper' });
-        return;
-    }
-
     const device = await prisma.device.upsert({
         where: { deviceId: request.body.deviceId },
         update: {

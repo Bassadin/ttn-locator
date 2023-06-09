@@ -18,7 +18,7 @@ describe('Test devices routes', () => {
     describe('POST /devices/', () => {
         test('Add device with valid ID', async () => {
             // May need to be adjusted later
-            const validDeviceId = 'eui-7066e1fffe006616';
+            const validDeviceId = 'test_device';
             const res = await request(app).post('/devices/').send({
                 deviceId: validDeviceId,
                 subscription: false,
