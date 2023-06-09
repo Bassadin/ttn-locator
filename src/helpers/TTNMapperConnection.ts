@@ -37,8 +37,8 @@ export default class TTNMapperConnection {
             throw new Error('deviceID must be defined');
         }
 
-        // Use 30 days as fallback
-        const fallbackDate = new Date(Date.now() - 30 * (24 * 60 * 60 * 1000));
+        // Use 180 days as fallback
+        const fallbackDate = new Date(Date.now() - 180 * (24 * 60 * 60 * 1000));
 
         const latestDeviceGPSDatapoint = await prisma.deviceGPSDatapoint.findFirst({
             where: {
