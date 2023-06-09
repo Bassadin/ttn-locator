@@ -55,7 +55,7 @@ jobs:
                   version: 8.6.1
 
             - run: pnpm install --frozen-lockfile
-            - run: pnpm prisma:generate-client
+            - run: pnpm prisma:generate
 
             - run: pnpm build
 
