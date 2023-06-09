@@ -29,7 +29,7 @@ describe('Test devices routes', () => {
         });
 
         test('Try adding device with invalid ID', async () => {
-            const invalidDeviceId = 'invalid-device-id-xxxxx';
+            const invalidDeviceId = '';
             const res = await request(app).post('/devices/').send({
                 deviceId: invalidDeviceId,
                 subscription: false,

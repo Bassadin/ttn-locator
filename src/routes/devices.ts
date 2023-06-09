@@ -21,6 +21,11 @@ router.get('/', async (request: Request, response: Response) => {
 
 // Create a new device
 router.post('/', async (request: Request, response: Response) => {
+    if (!request.body.deviceId) {
+        response.status(400).send({ message: 'Device ID is required' });
+        return;
+    }
+
     const device = await prisma.device.upsert({
         where: { deviceId: request.body.deviceId },
         update: {
