@@ -8,4 +8,8 @@ export default class GetterFunctions {
             },
         });
     }
+
+    public static getServerUptimeSeconds(): number {
+        return process.uptime();
+    }
 }

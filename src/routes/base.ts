@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import GetterFunctions from '@/helpers/GetterFunctions';
 import GetNewTTNMapperDataJob from '@/scheduledFunctions/GetNewTTNMapperDataJob';
+import FormattingHelpers from '@/helpers/FormattingHelpers';
 
 const router = express.Router();
 
@@ -9,8 +10,15 @@ const router = express.Router();
 // This is the Default Route of the API
 router.get('/', async (request: Request, response: Response) => {
     const numberOfDeviceSubscriptions = await GetterFunctions.getAmountOfDeviceSubscriptions();
+
+    const lastUpdated = GetNewTTNMapperDataJob.getInstance().lastUpdated.toISOString();
+    const uptime = GetterFunctions.getServerUptimeSeconds();
+
     response.send({
-        message: `Hello from ttn-locator-backend!\nCurrent amount of Device subscriptions: ${numberOfDeviceSubscriptions}`,
+        message: `Hello from ttn-locator-backend!`,
+        currentAmountOfDeviceSubscriptions: numberOfDeviceSubscriptions,
+        lastUpdated: lastUpdated,
+        uptime: FormattingHelpers.prettyPrintSecondsAsDurationString(uptime),
     });
 });
 

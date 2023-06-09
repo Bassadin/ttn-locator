@@ -6,6 +6,16 @@ import superagent from 'superagent';
 import BaseJob from '@/scheduledFunctions/BaseJob';
 
 export default class GetNewTTNMapperDataJob extends BaseJob {
+    private lastUpdatedAt = new Date();
+
+    public get lastUpdated(): Date {
+        return this.lastUpdatedAt;
+    }
+
+    public updateLastUpdatedAtDate(): void {
+        this.lastUpdatedAt = new Date();
+    }
+
     private static INSTANCE: GetNewTTNMapperDataJob;
     protected constructor() {
         super();
@@ -125,6 +135,7 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
 
         await Promise.all(promises);
         logger.info(`Finished updating metadata for ${gatewayIDsToUpdate.size} gateways.`);
+        this.updateLastUpdatedAtDate();
     }
 
     public async updateMetadataForGatewaWithID(gatewayID: string): Promise<void> {
