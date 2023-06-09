@@ -18,7 +18,6 @@
         "prettier:fix": "prettier --write .",
         "prisma:reset": "prisma migrate reset",
         "prisma:generate": "npx prisma generate",
-        "prisma:generate-client": "npx prisma generate --generator client",
         "prisma:studio": "prisma studio",
         "prisma:migrate:prod": "prisma migrate deploy",
         "prepare": "husky install",

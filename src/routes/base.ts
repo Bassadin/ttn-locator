@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import GetterFunctions from '@/helpers/GetterFunctions';
 import GetNewTTNMapperDataJob from '@/scheduledFunctions/GetNewTTNMapperDataJob';
 import FormattingHelpers from '@/helpers/FormattingHelpers';
+import prisma from '@/global/prisma';
 
 const router = express.Router();
 
@@ -13,9 +14,19 @@ router.get('/', async (request: Request, response: Response) => {
 
     const uptime = GetterFunctions.getServerUptimeSeconds();
 
+    const subscribedDevicesIDs = await prisma.device.findMany({
+        where: {
+            subscription: true,
+        },
+        select: {
+            deviceId: true,
+        },
+    });
+
     response.send({
         message: `Hello from ttn-locator-backend!`,
         currentAmountOfDeviceSubscriptions: numberOfDeviceSubscriptions,
+        subscribedDevicesIDs: subscribedDevicesIDs.map((eachDevice) => eachDevice.deviceId),
         lastUpdated: GetNewTTNMapperDataJob.getInstance().lastUpdatedPrintString(),
         uptime: FormattingHelpers.prettyPrintSecondsAsDurationString(uptime),
     });
