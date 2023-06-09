@@ -11,13 +11,12 @@ const router = express.Router();
 router.get('/', async (request: Request, response: Response) => {
     const numberOfDeviceSubscriptions = await GetterFunctions.getAmountOfDeviceSubscriptions();
 
-    const lastUpdated = GetNewTTNMapperDataJob.getInstance().lastUpdated.toISOString();
     const uptime = GetterFunctions.getServerUptimeSeconds();
 
     response.send({
         message: `Hello from ttn-locator-backend!`,
         currentAmountOfDeviceSubscriptions: numberOfDeviceSubscriptions,
-        lastUpdated: lastUpdated,
+        lastUpdated: GetNewTTNMapperDataJob.getInstance().lastUpdatedPrintString(),
         uptime: FormattingHelpers.prettyPrintSecondsAsDurationString(uptime),
     });
 });

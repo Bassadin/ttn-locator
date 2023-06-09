@@ -6,14 +6,24 @@ import superagent from 'superagent';
 import BaseJob from '@/scheduledFunctions/BaseJob';
 
 export default class GetNewTTNMapperDataJob extends BaseJob {
-    private lastUpdatedAt = new Date();
+    private lastUpdatedAt: Date | null = null;
 
-    public get lastUpdated(): Date {
+    public get lastUpdated(): Date | null {
         return this.lastUpdatedAt;
     }
 
     public updateLastUpdatedAtDate(): void {
         this.lastUpdatedAt = new Date();
+    }
+
+    public lastUpdatedPrintString(): string {
+        if (!this.lastUpdatedAt) {
+            return 'never';
+        }
+
+        const lastUpdateSeconds = Math.floor((Date.now() - this.lastUpdatedAt.getTime()) / 1000);
+
+        return `${this.lastUpdatedAt.toLocaleString()} - ${lastUpdateSeconds} seconds ago`;
     }
 
     private static INSTANCE: GetNewTTNMapperDataJob;
