@@ -61,22 +61,4 @@ describe('Test TTNMapperConnection class', () => {
             }).rejects.toThrowError();
         });
     });
-
-    describe('checkIfDeviceExistsOnTtnMapper()', () => {
-        test('Calling checkIfDeviceExistsOnTtnMapper() method with a valid device id', async () => {
-            expect(await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper('loris-hfu-001')).toBe(true);
-        });
-
-        test('Calling checkIfDeviceExistsOnTtnMapper() method with an invalid device id', async () => {
-            expect(await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper('invalid_device_id_xxxxxxxxxx')).toBe(
-                false,
-            );
-        });
-
-        test('Calling checkIfDeviceExistsOnTtnMapper() method with an empty device id', async () => {
-            expect(async () => {
-                await TTNMapperConnection.checkIfDeviceExistsOnTtnMapper('');
-            }).rejects.toThrowError();
-        });
-    });
 });
