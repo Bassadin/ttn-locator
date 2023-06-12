@@ -8,7 +8,7 @@ services:
         links:
             - db
         ports:
-            - '3000:3000'
+            - '57100:57100'
         environment:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttn-locator-backend
     db:
@@ -45,9 +45,6 @@ services:
             - ttn-locator-backend
         ports:
             - '8080:5000'
-        environment:
-            # This does not work yet
-            VITE_TTNMAPPER_LOCATOR_API_URL: http://ttn-locator-backend:3000
 volumes:
     postgres-data:
     pgadmin-data:

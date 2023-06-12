@@ -12,7 +12,7 @@ process.on('SIGINT', function () {
 });
 
 // Run the server!
-const PORT: number = parseInt(process.env.PORT || '3000');
+const PORT: number = parseInt(process.env.PORT || '57100');
 app.listen(PORT);
 
 logger.info(`Server running on port ${PORT}`);

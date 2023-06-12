@@ -3,7 +3,7 @@ import * as http from 'node:http';
 const options = {
     host: 'localhost',
     path: '/healthcheck',
-    port: 3000,
+    port: 57100,
     timeout: 1200,
 };
 
