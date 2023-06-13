@@ -44,7 +44,7 @@ services:
         links:
             - ttn-locator-backend
         ports:
-            - '8080:5000'
+            - '57200:57200'
 volumes:
     postgres-data:
     pgadmin-data:
