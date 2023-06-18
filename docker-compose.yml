@@ -45,6 +45,8 @@ services:
             - ttn-locator-backend
         ports:
             - '57200:57200'
+        environment:
+            - TTNL_API_URL=http://localhost:57100/
 volumes:
     postgres-data:
     pgadmin-data:
