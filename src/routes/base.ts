@@ -25,8 +25,20 @@ router.get('/', async (request: Request, response: Response) => {
 
     response.send({
         message: `Hello from ttn-locator-backend!`,
-        currentAmountOfDeviceSubscriptions: numberOfDeviceSubscriptions,
-        subscribedDevicesIDs: subscribedDevicesIDs.map((eachDevice) => eachDevice.deviceId),
+        metadata: {
+            deviceSubscriptions: {
+                currentAmountOfDeviceSubscriptions: numberOfDeviceSubscriptions,
+                subscribedDevicesIDs: subscribedDevicesIDs.map(
+                    (eachDevice: { deviceId: string }) => eachDevice.deviceId,
+                ),
+            },
+            deviceGpsDatapoints: {
+                currentAmountOfDeviceGpsDatapoints: await prisma.deviceGPSDatapoint.count(),
+            },
+            gateways: {
+                currentAmountOfGateways: await prisma.gateway.count(),
+            },
+        },
         lastUpdated: GetNewTTNMapperDataJob.getInstance().lastUpdatedPrintString(),
         uptime: FormattingHelpers.prettyPrintSecondsAsDurationString(uptime),
     });
