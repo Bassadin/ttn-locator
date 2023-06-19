@@ -151,6 +151,15 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
             promises.push(this.updateMetadataForGatewaWithID(eachGatewayID));
         }
 
+        // Delete Gateways without location data
+        await prisma.gateway.deleteMany({
+            where: {
+                latitude: 0,
+                longitude: 0,
+                altitude: 0,
+            },
+        });
+
         await Promise.all(promises);
         logger.info(`Finished updating metadata for ${gatewayIDsToUpdate.size} gateways.`);
         this.updateLastUpdatedAtDate();
