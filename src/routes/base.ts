@@ -50,9 +50,15 @@ router.get('/healthcheck', async (request: Request, response: Response) => {
 });
 
 router.post('/fetch_device_data', async (_request: Request, _response: Response) => {
-    await GetNewTTNMapperDataJob.getInstance().executeJob();
+    GetNewTTNMapperDataJob.getInstance()
+        .executeJob()
+        .then(() => {
+            _response.send({ message: 'OK' });
+        })
 
-    _response.send({ message: 'OK' });
+        .catch(() => {
+            _response.send({ message: 'ERROR' });
+        });
 });
 
 export default router;
