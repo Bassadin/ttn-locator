@@ -4,6 +4,8 @@ import prisma from '@/global/prisma';
 import TTNAPIGatewayDataResponse from '@/types/TTNAPIGatewayDataResponse';
 import superagent from 'superagent';
 import BaseJob from '@/scheduledFunctions/BaseJob';
+import FormattingHelpers from '@/helpers/FormattingHelpers';
+import GeneralHelpers from '@/helpers/GeneralHelpers';
 
 export default class GetNewTTNMapperDataJob extends BaseJob {
     private lastUpdatedAt: Date | null = null;
@@ -22,8 +24,11 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
         }
 
         const lastUpdateSeconds = Math.floor((Date.now() - this.lastUpdatedAt.getTime()) / 1000);
+        const durationString = FormattingHelpers.prettyPrintSecondsAsDurationString(lastUpdateSeconds);
 
-        return `${this.lastUpdatedAt.toLocaleString()} - ${lastUpdateSeconds} seconds ago`;
+        const germanTimeString = GeneralHelpers.printTimeAsGermanString(this.lastUpdatedAt);
+
+        return `${germanTimeString} - ${durationString} seconds ago`;
     }
 
     private static INSTANCE: GetNewTTNMapperDataJob;
