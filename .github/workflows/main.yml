@@ -83,6 +83,26 @@ jobs:
             - run: pnpm install --frozen-lockfile
             - name: Run eslint scan
               run: pnpm run eslint:scan
+    build-artifact:
+        runs-on: ubuntu-latest
+        needs: [build-and-test, eslint]
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm run build
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ttn-locator-backend
+                  path: dist
     build-docker:
         runs-on: ubuntu-latest
         permissions:
