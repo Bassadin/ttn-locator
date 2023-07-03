@@ -9,6 +9,9 @@ import DevicesRoutes from '@/routes/devices';
 import DeviceGPSDatapointsRoutes from '@/routes/device_gps_datapoints';
 import GatewaysRoutes from '@/routes/gateways';
 
+// Auth middleware
+import apiKeyAuthMiddleware from '@/middleware/apiKeyAuth';
+
 // Error handler
 import prismaErrorHandler from '@/middleware/prismaErrorHandler';
 import catchAllErrorHandler from '@/middleware/catchAllErrorHandler';
@@ -45,10 +48,10 @@ app.use(cors());
 
 // Register Routes
 app.use('/', BaseRoutes);
-app.use('/ttnmapper_datapoints', TTNMapperDatapointsRoutes);
-app.use('/devices', DevicesRoutes);
-app.use('/device_gps_datapoints', DeviceGPSDatapointsRoutes);
-app.use('/gateways', GatewaysRoutes);
+app.use('/ttnmapper_datapoints', apiKeyAuthMiddleware, TTNMapperDatapointsRoutes);
+app.use('/devices', apiKeyAuthMiddleware, DevicesRoutes);
+app.use('/device_gps_datapoints', apiKeyAuthMiddleware, DeviceGPSDatapointsRoutes);
+app.use('/gateways', apiKeyAuthMiddleware, GatewaysRoutes);
 
 // Error handler
 app.use(prismaErrorHandler);

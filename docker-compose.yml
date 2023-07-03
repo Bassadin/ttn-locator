@@ -11,6 +11,17 @@ services:
             - '57100:57100'
         environment:
             - DATABASE_URL=postgresql://postgres:postgres@db:5432/ttn-locator-backend
+            - API_KEY=1234567890
+    ttn-locator-frontend:
+        image: ghcr.io/bassadin/ttn-locator-frontend:latest
+        restart: unless-stopped
+        links:
+            - ttn-locator-backend
+        ports:
+            - '57200:57200'
+        environment:
+            - TTN_LOCATOR_API_URL=http://localhost:57100/
+            - TTN_LOCATOR_API_KEY=1234567890
     db:
         image: postgis/postgis:15-3.3
         environment:
@@ -38,15 +49,6 @@ services:
             - pgadmin-data:/var/lib/pgadmin
             - ./pgadmin_server_config/servers.json:/pgadmin4/servers.json
             - ./pgadmin_server_config/pgpass:/pgpass:rw
-    ttn-locator-frontend:
-        image: ghcr.io/bassadin/ttn-locator-frontend:latest
-        restart: unless-stopped
-        links:
-            - ttn-locator-backend
-        ports:
-            - '57200:57200'
-        environment:
-            - TTNL_API_URL=http://localhost:57100/
 volumes:
     postgres-data:
     pgadmin-data:

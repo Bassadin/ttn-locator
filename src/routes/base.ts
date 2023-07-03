@@ -4,6 +4,9 @@ import GetNewTTNMapperDataJob from '@/scheduledFunctions/GetNewTTNMapperDataJob'
 import FormattingHelpers from '@/helpers/FormattingHelpers';
 import prisma from '@/global/prisma';
 
+// Auth middleware
+import apiKeyAuthMiddleware from '@/middleware/apiKeyAuth';
+
 const router = express.Router();
 
 // 🏚️ Default Route
@@ -49,7 +52,7 @@ router.get('/healthcheck', async (request: Request, response: Response) => {
     response.send({ message: 'OK' });
 });
 
-router.post('/fetch_device_data', async (_request: Request, _response: Response) => {
+router.post('/fetch_device_data', apiKeyAuthMiddleware, async (_request: Request, _response: Response) => {
     GetNewTTNMapperDataJob.getInstance()
         .executeJob()
         .then(() => {
