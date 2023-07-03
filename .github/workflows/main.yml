@@ -96,6 +96,7 @@ jobs:
                   version: 8
 
             - run: pnpm install --frozen-lockfile
+            - run: pnpm prisma:generate
             - run: pnpm run build
 
             - name: Upload artifact
