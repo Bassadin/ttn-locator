@@ -32,6 +32,7 @@ model TtnMapperDatapoint {
 model DeviceGPSDatapoint {
     id                  Int                  @id @default(autoincrement())
     timestamp           DateTime             @db.Timestamp(6) // 6 digits of precision for the fractional seconds
+    // TODO: Does this need a cascade?
     device              Device               @relation(fields: [deviceId], references: [deviceId], onDelete: Cascade, onUpdate: Cascade)
     deviceId            String
     latitude            Float
