@@ -49,18 +49,20 @@ model Device {
     deviceGPSDatapoints DeviceGPSDatapoint[]
     subscription        Boolean              @default(true)
     createdAt           DateTime             @default(now())
-    updatedAt           DateTime             @updatedAt @default(now())
+    updatedAt           DateTime             @default(now()) @updatedAt
 }
 
 model Gateway {
-    gatewayId           String               @id
-    name                String?
-    description         String?
-    latitude            Float
-    longitude           Float
-    altitude            Float
-    ttnmapperDatapoints TtnMapperDatapoint[]
-    createdAt           DateTime             @default(now())
-    updatedAt           DateTime             @updatedAt @default(now())
-    lastSeen            DateTime             @default(now())
+    gatewayId                 String               @id
+    name                      String?
+    description               String?
+    latitude                  Float
+    longitude                 Float
+    altitude                  Float
+    ttnmapperDatapoints       TtnMapperDatapoint[]
+    linearRegressionSlope     Float?
+    linearRegressionIntercept Float?
+    createdAt                 DateTime             @default(now())
+    updatedAt                 DateTime             @default(now()) @updatedAt
+    lastSeen                  DateTime             @default(now())
 }

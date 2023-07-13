@@ -20,6 +20,7 @@ import catchAllErrorHandler from '@/middleware/catchAllErrorHandler';
 import GetNewTTNMapperDataJob from '@/scheduledFunctions/GetNewTTNMapperDataJob';
 import DeleteEmptyDeviceGpsDatapointsJob from '@/scheduledFunctions/DeleteEmptyDeviceGpsDatapointsJob';
 import CleanGpsDatapointsJob from './scheduledFunctions/CleanGpsDatapointsJob';
+import CalculatePerGatewayLinearRegressionJob from './scheduledFunctions/CalculatePerGatewayLinearRegression';
 
 // Fastify instance
 const app: Application = express();
@@ -63,6 +64,7 @@ if (process.env.NODE_ENV != 'test') {
     GetNewTTNMapperDataJob.getInstance().initScheduledJob();
     DeleteEmptyDeviceGpsDatapointsJob.getInstance().initScheduledJob();
     CleanGpsDatapointsJob.getInstance().initScheduledJob();
+    CalculatePerGatewayLinearRegressionJob.getInstance().initScheduledJob();
 } else {
     logger.warn('Scheduled jobs are not running in test environment');
 }
