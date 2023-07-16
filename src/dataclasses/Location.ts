@@ -1,5 +1,9 @@
 export default class Location {
-    constructor(public latitude: number, public longitude: number, public altitude: number) {}
+    constructor(
+        public latitude: number,
+        public longitude: number,
+        public altitude: number,
+    ) {}
 
     // https://stackoverflow.com/a/27943
     getMeterDistanceWithoutAltitudeTo(other: Location): number {
