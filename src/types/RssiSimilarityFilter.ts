@@ -3,5 +3,7 @@ export default class RssiSimilarityFilter {
         public gatewayId: string,
         public minRssi: number,
         public maxRssi: number,
+        public minSnr?: number,
+        public maxSnr?: number,
     ) {}
 }

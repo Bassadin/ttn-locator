@@ -13,17 +13,26 @@ export default class DeviceGPSDatapointsHelper {
         };
 
         for (const filterCriteria of similarityFilter) {
+            const filterCondition: any = {
+                gateway: {
+                    gatewayId: filterCriteria.gatewayId,
+                },
+                rssi: {
+                    gte: filterCriteria.minRssi,
+                    lte: filterCriteria.maxRssi,
+                },
+            };
+
+            if (filterCriteria.minSnr && filterCriteria.maxSnr) {
+                filterCondition.snr = {
+                    gte: filterCriteria.minSnr,
+                    lte: filterCriteria.maxSnr,
+                };
+            }
+
             prismaFilterQuery.AND.push({
                 ttnMapperDatapoints: {
-                    some: {
-                        gateway: {
-                            gatewayId: filterCriteria.gatewayId,
-                        },
-                        rssi: {
-                            gte: filterCriteria.minRssi,
-                            lte: filterCriteria.maxRssi,
-                        },
-                    },
+                    some: filterCondition,
                 },
             });
         }
