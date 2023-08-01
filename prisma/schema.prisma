@@ -39,6 +39,7 @@ model DeviceGPSDatapoint {
     longitude           Float
     altitude            Float
     hdop                Float
+    spreadingFactor     Int?
     ttnMapperDatapoints TtnMapperDatapoint[]
 
     @@unique([deviceId, timestamp])
