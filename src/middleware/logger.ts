@@ -13,6 +13,7 @@ const logger = pino(loggerOptions);
 /* istanbul ignore if  */
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     logger.level = 'debug';
+    logger.debug('Setting logger level to debug');
 }
 
 logger.info(`Logger initialized, running in ${process.env.NODE_ENV} mode`);
