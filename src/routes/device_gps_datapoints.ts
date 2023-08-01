@@ -65,6 +65,35 @@ router.get('/count_by_ttnmapper_datapoints', async (_request: Request, response:
     });
 });
 
+// Get the count of device gps datapoints grouped by spreading factor
+router.get('/count_by_spreading_factor', async (_request: Request, response: Response) => {
+    interface SpreadingFactorCountQueryResult {
+        spreadingFactor: number;
+        device_gps_datapoints_count: number;
+    }
+
+    const result: SpreadingFactorCountQueryResult[] = await prisma.deviceGPSDatapoint
+        .groupBy({
+            by: ['spreadingFactor'],
+            _count: {
+                spreadingFactor: true,
+            },
+            orderBy: {
+                spreadingFactor: 'asc',
+            },
+        })
+        .then((data) =>
+            data.map((item) => ({
+                spreadingFactor: item.spreadingFactor,
+                device_gps_datapoints_count: item._count.spreadingFactor,
+            })),
+        );
+
+    response.send({
+        data: result,
+    });
+});
+
 // Get GPS datapoint by id, including all TTNMapper datapoints
 router.get('/:id', async (request: Request, response: Response) => {
     const deviceGPSDatapoint = await prisma.deviceGPSDatapoint.findUnique({
