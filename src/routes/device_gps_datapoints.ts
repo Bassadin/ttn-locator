@@ -158,6 +158,7 @@ router.get('/:id/ttnmapper_datapoints_with_gateway_locations', async (request: R
 // Get all gps datapoints for a specific set of gateways and rssi ranges
 router.post('/rssi_similarity', async (request: Request, response: Response) => {
     const similarityFilter: RssiSimilarityFilter[] = request.body.similarityFilter;
+    const spreadingFactor = request.body.spreadingFactor || null;
 
     if (!similarityFilter || similarityFilter.length === 0) {
         response.status(400).send({ error: 'No similarity filter provided' });
@@ -170,6 +171,7 @@ router.post('/rssi_similarity', async (request: Request, response: Response) => 
 
     const filteredDeviceGPSDatapoints = await DeviceGPSDatapointsHelper.getMatchingDeviceGPSDatapointsFromFilter(
         similarityFilter,
+        spreadingFactor,
     );
 
     response.send({

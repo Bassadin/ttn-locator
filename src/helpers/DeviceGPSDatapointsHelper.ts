@@ -5,6 +5,7 @@ import { DeviceGPSDatapoint } from '@prisma/client';
 export default class DeviceGPSDatapointsHelper {
     public static async getMatchingDeviceGPSDatapointsFromFilter(
         similarityFilter: RssiSimilarityFilter[],
+        spreadingFactor?: number,
     ): Promise<DeviceGPSDatapoint[]> {
         // TODO: Not sure how to do this without any
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +29,12 @@ export default class DeviceGPSDatapointsHelper {
                     gte: filterCriteria.minSnr,
                     lte: filterCriteria.maxSnr,
                 };
+            }
+
+            if (spreadingFactor) {
+                prismaFilterQuery.AND.push({
+                    spreadingFactor: spreadingFactor,
+                });
             }
 
             prismaFilterQuery.AND.push({
