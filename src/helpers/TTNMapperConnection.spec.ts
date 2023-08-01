@@ -17,6 +17,7 @@ describe('Test TTNMapperConnection class', () => {
             longitude: 999.0,
             altitude: 1337.0,
             hdop: 0.0,
+            spreadingFactor: 7,
         };
 
         await prisma.deviceGPSDatapoint.deleteMany({ where: dataForExampleGPSDatapoint });

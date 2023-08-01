@@ -30,6 +30,7 @@ async function main() {
             longitude: 8.0,
             altitude: 0.0,
             hdop: 0.0,
+            spreadingFactor: 7,
         },
     });
     const exampleTTNmapperDatapoint = await prisma.ttnMapperDatapoint.upsert({
