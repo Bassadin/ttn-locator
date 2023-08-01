@@ -6,7 +6,6 @@ import prisma from '@/global/prisma';
 
 // Auth middleware
 import apiKeyAuthMiddleware from '@/middleware/apiKeyAuth';
-import AddSpreadingFactorRetroactively from '@/helpers/AddSpreadingFactorRetroactively';
 
 const router = express.Router();
 
@@ -60,19 +59,6 @@ router.post('/fetch_device_data', apiKeyAuthMiddleware, async (_request: Request
             _response.send({ message: 'OK' });
         })
 
-        .catch(() => {
-            _response.send({ message: 'ERROR' });
-        });
-});
-
-router.post('/updateSpreadingFactors', apiKeyAuthMiddleware, async (_request: Request, _response: Response) => {
-    AddSpreadingFactorRetroactively.updateExistingDeviceGpsDatapoints()
-        .then((amountOfDeviceGpsDatapointsWithoutSpreadingFactor) => {
-            _response.send({
-                message: 'OK',
-                amountOfDeviceGpsDatapointsWithoutSpreadingFactor: amountOfDeviceGpsDatapointsWithoutSpreadingFactor,
-            });
-        })
         .catch(() => {
             _response.send({ message: 'ERROR' });
         });
