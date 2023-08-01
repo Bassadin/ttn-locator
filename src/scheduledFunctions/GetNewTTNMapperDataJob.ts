@@ -101,6 +101,7 @@ export default class GetNewTTNMapperDataJob extends BaseJob {
                             longitude: eachTTNMapperAPIDatapoint.longitude,
                             altitude: eachTTNMapperAPIDatapoint.altitude,
                             hdop: eachTTNMapperAPIDatapoint.hdop,
+                            spreadingFactor: eachTTNMapperAPIDatapoint.spreading_factor,
                         },
                         update: {},
                     });

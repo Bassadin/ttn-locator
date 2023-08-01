@@ -9,6 +9,7 @@ export default class TTNMapperGatewayAPIDeviceGPSDatapoint {
         public gateway_id: string,
         public rssi: number,
         public snr: number,
+        public spreading_factor: number,
         public hdop: number,
         public database_id: number,
         public time: Date,
