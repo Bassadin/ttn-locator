@@ -19,9 +19,14 @@ export default class TTNMapperConnection {
 
         logger.info(`Getting new TTNMapper data for Device ${deviceID} from ${startDateAndTime}`);
 
-        const apiResponse = await superagent.get(
-            `https://api.ttnmapper.org/device/data?dev_id=${deviceID}&start_time=${startDateAndTime.toISOString()}`,
-        );
+        const ttnMapperApiUrl = `https://api.ttnmapper.org/device/data?dev_id=${deviceID}&start_time=${startDateAndTime.toISOString()}`;
+
+        logger.debug(`Calling TTN Mapper api with url ${ttnMapperApiUrl}`);
+
+        const apiResponse = await superagent.get(ttnMapperApiUrl).timeout({
+            response: 8 * 1000,
+            deadline: 10 * 1000,
+        });
 
         if (apiResponse.body.success == false || apiResponse.body == undefined) {
             throw new Error(`TTN Mapper api errored: ${JSON.stringify(apiResponse.body)}`);
