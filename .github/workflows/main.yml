@@ -52,7 +52,7 @@ jobs:
                   node-version: 16
             - uses: pnpm/action-setup@v2
               with:
-                  version: 8.6.3
+                  version: 8.6.11
 
             - run: pnpm install --frozen-lockfile
             - run: pnpm prisma:generate
@@ -79,7 +79,7 @@ jobs:
                   node-version: 16
             - uses: pnpm/action-setup@v2
               with:
-                  version: 8.6.3
+                  version: 8.6.11
             - run: pnpm install --frozen-lockfile
             - name: Run eslint scan
               run: pnpm run eslint:scan
