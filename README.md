@@ -5,21 +5,18 @@ Part of my [Master's Thesis in summer semester 2023](https://github.com/Bassadin
 A simple service that reads data from TTNMapper and stores it in a PostgreSQL database.
 Supports device subscriptions from which it will pull data from TTNMapper to get RSSI and GPS data according to the gateways that received the signal.
 
-The goal is to write queries that can determine a device's location based on the RSSI and/or ToA data alone.
+The goal is to write queries that can determine a device's location based on the RSSI values.
 
-## Important note
-
-**Not at all production-ready yet!**
-
-## 🍔 Stack Specs
+## Used Technologies
 
 -   Node.js
 -   Express
 -   TypeScript
 -   Prisma
 -   Postgres
+-   GitHub Copilot
 
-## 🧬 Development
+## Development
 
 -   `pnpm i`
 -   `pnpm i -g prisma ts-node`
@@ -30,7 +27,7 @@ The goal is to write queries that can determine a device's location based on the
 -   `pnpm run dev` to start the development server
 -   `pnpm run test:run` to run the tests
 
-## 🚀 Production Build
+## Production Build
 
 -   Run the production build
 
